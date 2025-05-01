@@ -1,1 +1,94 @@
 <!-- index.html content -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SorprendARTE - Tienda de Jabones Personalizados</title>
+  <style>
+    body {
+      font-family: Segoe UI, sans-serif;
+      background: white;
+      padding: 2rem;
+    }
+    h1 {
+      color: #8b1e3f;
+      text-align: center;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .producto {
+      width: 200px;
+      margin: 10px;
+      text-align: center;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+    }
+    .producto img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .producto a {
+      display: block;
+      margin-top: 10px;
+      background: #8b1e3f;
+      color: white;
+      padding: 8px;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+    .producto a:hover {
+      background: #a82a53;
+    }
+  </style>
+</head>
+<body>
+  <h1>SorprendARTE - Tienda de Jabones Personalizados</h1>
+
+  <div class="container">
+    <div class="producto">
+      <img src="img/jabon0.jpg" alt="Jabón 0% Aroma, 0% Color">
+      <a href="info_jabon0.html">Imagen e info.</a>
+      <p>Jabón neutro sin aroma ni color</p>
+      <input type="number" placeholder="Cantidad" min="1">
+    </div>
+    <div class="producto">
+      <img src="img/carbon.jpg" alt="Jabón de Carbón Activado">
+      <a href="info_carbon.html">Imagen e info.</a>
+      <p>Jabón de Carbón Activado</p>
+      <input type="number" placeholder="Cantidad" min="1">
+    </div>
+    <div class="producto">
+      <img src="img/mandarina.jpg" alt="Jabón con Aroma a Mandarina">
+      <a href="info_mandarina.html">Imagen e info.</a>
+      <p>Jabón con Aroma a Mandarina</p>
+      <input type="number" placeholder="Cantidad" min="1">
+    </div>
+    <div class="producto">
+      <img src="img/sandia.jpg" alt="Jabón con Aroma a Sandía">
+      <a href="info_sandia.html">Imagen e info.</a>
+      <p>Jabón con Aroma a Sandía</p>
+      <input type="number" placeholder="Cantidad" min="1">
+    </div>
+    <div class="producto">
+      <img src="img/uva.jpg" alt="Jabón con Aroma a Uva">
+      <a href="info_uva.html">Imagen e info.</a>
+      <p>Jabón con Aroma a Uva</p>
+      <input type="number" placeholder="Cantidad" min="1">
+    </div>
+    <div class="producto">
+      <img src="img/durazno.jpg" alt="Jabón con Aroma a Durazno">
+      <a href="info_durazno.html">Imagen e info.</a>
+      <p>Jabón con Aroma a Durazno</p>
+      <input type="number" placeholder="Cantidad" min="1">
+    </div>
+  </div>
+
+  <br>
+  <button onclick="window.location.href='pedidos.html'">Enviar pedido</button>
+</body>
+</html>

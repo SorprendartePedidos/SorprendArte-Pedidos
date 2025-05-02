@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Confirmación de Pedido</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fdf5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+    .mensaje {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #39b7b0;
+    }
+    button {
+      margin-top: 1.5rem;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #39b7b0;
+      color: white;
+      border: 2px solid #c2185b;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #2ca59d;
+    }
+  </style>
+</head>
+<body>
+  <div class="mensaje">
+    <h2 id="mensaje">Tu pedido ha sido enviado</h2>
+    <p>¡Muchas gracias por elegirnos!</p>
+    <button onclick="verInfo()">Información sobre el pedido</button>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(document.referrer.split('?')[1]);
+    const nombre = params.get("nombre") || "Cliente";
+    document.getElementById("mensaje").textContent = `Tu pedido ha sido enviado, ${nombre}`;
+
+    function verInfo() {
+      window.location.href = "resumen.html?" + document.referrer.split('?')[1];
+    }
+  </script>
+</body>
+</html>

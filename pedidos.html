@@ -15,7 +15,7 @@
       color: #39b7b0;
     }
     form {
-      max-width: 500px;
+      max-width: 600px;
       margin: 0 auto;
       background: white;
       padding: 2rem;
@@ -41,16 +41,29 @@
     button:hover {
       background-color: #2ca59d;
     }
+    .resumen {
+      margin-bottom: 1.5rem;
+    }
+    .resumen p {
+      background: #e6f7f6;
+      padding: 0.5rem;
+      border-radius: 5px;
+    }
   </style>
 </head>
 <body>
 
   <h1>Confirmar pedido</h1>
 
-  <form action="https://formsubmit.co/sorprendarte01@gmail.com" method="POST">
-    <!-- Redirección después del envío -->
+  <form action="https://formsubmit.co/sorprendarte01@gmail.com" method="POST" id="pedidoForm">
     <input type="hidden" name="_next" value="gracias.html">
     <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="maps_link" id="maps_link">
+
+    <div class="resumen" id="resumen">
+      <h3>Resumen de tu pedido:</h3>
+      <!-- Aquí se insertarán los productos con cantidad -->
+    </div>
 
     <!-- Datos personales -->
     <input type="text" name="nombre" placeholder="Nombre completo" required>
@@ -59,28 +72,45 @@
     <input type="text" name="colonia" placeholder="Colonia" required>
     <input type="text" name="direccion" placeholder="Dirección (calle y número)" required>
 
-    <!-- Productos -->
-    <input type="number" name="uva" placeholder="Cantidad de jabones de Uva" min="0">
-    <input type="number" name="durazno" placeholder="Cantidad de jabones de Durazno" min="0">
-    <input type="number" name="mandarina" placeholder="Cantidad de jabones de Mandarina" min="0">
-    <input type="number" name="sandia" placeholder="Cantidad de jabones de Sandía" min="0">
-    <input type="number" name="neutro" placeholder="Cantidad de jabones 0% aroma y color" min="0">
-    <input type="number" name="carbon" placeholder="Cantidad de jabones de Carbón activado" min="0">
-
-    <!-- Link de Google Maps -->
-    <input type="hidden" name="maps_link" id="maps_link">
-
-    <!-- Botón de enviar -->
     <button type="submit">Confirmar pedido</button>
   </form>
 
   <script>
-    const form = document.querySelector('form');
+    // Extrae los parámetros de la URL
+    const params = new URLSearchParams(window.location.search);
+    const resumen = document.getElementById('resumen');
+    const form = document.getElementById('pedidoForm');
+
+    const productos = {
+      uva: "Jabón con Aroma a Uva",
+      durazno: "Jabón con Aroma a Durazno",
+      mandarina: "Jabón con Aroma a Mandarina",
+      sandia: "Jabón con Aroma a Sandía",
+      neutro: "Jabón 0% Aroma, 0% Color",
+      carbon: "Jabón de Carbón Activado"
+    };
+
+    for (let clave in productos) {
+      const cantidad = params.get(clave);
+      if (cantidad && parseInt(cantidad) > 0) {
+        const p = document.createElement('p');
+        p.textContent = `${productos[clave]}: ${cantidad}`;
+        resumen.appendChild(p);
+
+        // Crea un input oculto para enviar el valor
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = clave;
+        input.value = cantidad;
+        form.appendChild(input);
+      }
+    }
+
+    // Google Maps link dinámico
     form.addEventListener('submit', function () {
-      const direccionCompleta = `${form.direccion.value}, ${form.colonia.value}, ${form.estado.value}`;
-      const direccionEnlace = encodeURIComponent(direccionCompleta);
-      document.getElementById('maps_link').value =
-        `https://www.google.com/maps/search/?api=1&query=${direccionEnlace}`;
+      const direccion = `${form.direccion.value}, ${form.colonia.value}, ${form.estado.value}`;
+      const encoded = encodeURIComponent(direccion);
+      document.getElementById('maps_link').value = `https://www.google.com/maps/search/?api=1&query=${encoded}`;
     });
   </script>
 

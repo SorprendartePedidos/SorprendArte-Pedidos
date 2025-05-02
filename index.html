@@ -75,6 +75,12 @@
     .boton-pedido:hover {
       background-color: #2ca59d;
     }
+
+    /* Para centrar los productos de 0% y Carbón */
+    .producto.blanco, .producto.carbon {
+      width: 200px;
+      margin-top: 20px;
+    }
   </style>
 </head>
 
@@ -110,6 +116,10 @@
         <p>Jabón con Aroma a Sandía</p>
         <input type="number" name="sandia" placeholder="Cantidad" min="0" value="0">
       </div>
+    </div>
+
+    <!-- Los productos 0% y Carbón están centrados debajo de los otros -->
+    <div class="container">
       <div class="producto blanco">
         <img src="o%25aroma0%25color.png" alt="Jabón Neutro 0%">
         <a href="info_jabon0.html">Imagen e info.</a>

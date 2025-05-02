@@ -3,84 +3,65 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Confirmar pedido - SorprendARTE</title>
+  <title>Resumen de tu pedido</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f0f8ff;
+      background: #f2f2f2;
       padding: 2rem;
-    }
-    h1 {
       text-align: center;
-      color: #39b7b0;
-    }
-    form {
-      max-width: 600px;
-      margin: 0 auto;
-      background: white;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    input, button {
-      display: block;
-      width: 100%;
-      margin-bottom: 1rem;
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-    }
-    button {
-      background-color: #39b7b0;
-      color: white;
-      border: 2px solid #e48a97;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    button:hover {
-      background-color: #2ca59d;
     }
     .resumen {
-      margin-bottom: 1.5rem;
+      background: white;
+      border-radius: 8px;
+      padding: 2rem;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    .resumen p {
-      background: #e6f7f6;
-      padding: 0.5rem;
+    input, textarea {
+      width: 90%;
+      margin: 0.5rem 0;
+      padding: 10px;
+      font-size: 14px;
       border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #39b7b0;
+      color: white;
+      border: 2px solid #c2185b;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+    button:hover {
+      background: #2ca59d;
     }
   </style>
 </head>
 <body>
+  <div class="resumen">
+    <h2>Resumen de tu pedido</h2>
+    <div id="lista-pedido"></div>
 
-  <h1>Confirmar pedido</h1>
-
-  <form action="https://formsubmit.co/sorprendarte01@gmail.com" method="POST" id="pedidoForm">
-    <input type="hidden" name="_next" value="gracias.html">
-    <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="maps_link" id="maps_link">
-
-    <div class="resumen" id="resumen">
-      <h3>Resumen de tu pedido:</h3>
-      <!-- Aquí se insertarán los productos con cantidad -->
-    </div>
-
-    <!-- Datos personales -->
-    <input type="text" name="nombre" placeholder="Nombre completo" required>
-    <input type="email" name="correo" placeholder="Correo electrónico" required>
-    <input type="text" name="estado" placeholder="Estado" required>
-    <input type="text" name="colonia" placeholder="Colonia" required>
-    <input type="text" name="direccion" placeholder="Dirección (calle y número)" required>
-
-    <button type="submit">Confirmar pedido</button>
-  </form>
+    <form id="formularioPedido" action="confirmacion.html" method="POST">
+      <input type="text" name="nombre" placeholder="Tu nombre" required />
+      <input type="email" name="correo" placeholder="Tu correo electrónico" required />
+      <input type="text" name="estado" placeholder="Estado" required />
+      <input type="text" name="municipio" placeholder="Municipio" required />
+      <input type="text" name="colonia" placeholder="Colonia" required />
+      <textarea name="direccion" placeholder="Dirección completa" required></textarea>
+      <input type="hidden" name="pedidoResumen" id="pedidoResumen" />
+      <button type="submit">Confirmar pedido</button>
+    </form>
+  </div>
 
   <script>
-    // Extrae los parámetros de la URL
+    // Lee los parámetros de la URL
     const params = new URLSearchParams(window.location.search);
-    const resumen = document.getElementById('resumen');
-    const form = document.getElementById('pedidoForm');
-
     const productos = {
       uva: "Jabón con Aroma a Uva",
       durazno: "Jabón con Aroma a Durazno",
@@ -90,29 +71,19 @@
       carbon: "Jabón de Carbón Activado"
     };
 
-    for (let clave in productos) {
-      const cantidad = params.get(clave);
-      if (cantidad && parseInt(cantidad) > 0) {
-        const p = document.createElement('p');
-        p.textContent = `${productos[clave]}: ${cantidad}`;
-        resumen.appendChild(p);
+    let lista = "";
+    let resumen = "";
 
-        // Crea un input oculto para enviar el valor
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = clave;
-        input.value = cantidad;
-        form.appendChild(input);
+    for (let key in productos) {
+      const cantidad = params.get(key);
+      if (cantidad && parseInt(cantidad) > 0) {
+        lista += `<p><strong>${productos[key]}</strong>: ${cantidad}</p>`;
+        resumen += `${productos[key]}: ${cantidad}\n`;
       }
     }
 
-    // Google Maps link dinámico
-    form.addEventListener('submit', function () {
-      const direccion = `${form.direccion.value}, ${form.colonia.value}, ${form.estado.value}`;
-      const encoded = encodeURIComponent(direccion);
-      document.getElementById('maps_link').value = `https://www.google.com/maps/search/?api=1&query=${encoded}`;
-    });
+    document.getElementById("lista-pedido").innerHTML = lista;
+    document.getElementById("pedidoResumen").value = resumen;
   </script>
-
 </body>
 </html>

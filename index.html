@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SorprendARTE - Tienda de Jabones Personalizados</title>
   <style>
     body {
       font-family: Segoe UI, sans-serif;
-      background: white url('fondo2.png') no-repeat center center fixed;
+      background: url('fondo2.png') no-repeat center center fixed;
       background-size: cover;
-      padding: 2rem;
       margin: 0;
+      padding: 2rem;
     }
 
-    h1 {
-      color: #8b1e3f;
-      text-align: center;
+    .logo {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .logo img {
+      max-width: 300px;
     }
 
     .container {
@@ -27,107 +32,154 @@
 
     .producto {
       width: 200px;
-      margin: 10px;
-      text-align: center;
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       padding: 10px;
-      background-color: #fdfcfa; /* blanco pastel */
+      text-align: center;
     }
 
-    .producto img {
-      width: 100%;
-      border-radius: 8px;
+    .producto h3 {
+      margin-top: 0;
     }
 
     .producto a {
       display: block;
       margin-top: 10px;
+      color: white;
       padding: 8px;
       text-decoration: none;
       border-radius: 4px;
-      color: white;
     }
 
-    /* Colores personalizados por tipo */
-    .jabon0 a { background: white; color: black; }
-    .carbon a { background: black; }
-    .mandarina a { background: red; }
-    .sandia a { background: green; }
-    .uva a { background: blue; }
-    .durazno a { background: yellow; color: black; }
-
-    .producto a:hover {
-      opacity: 0.9;
+    .producto input {
+      margin-top: 10px;
+      padding: 5px;
+      width: 100%;
+      box-sizing: border-box;
+      border-radius: 4px;
+      border: 1px solid #ccc;
     }
 
-    button {
-      background-color: #2c8f8e; /* verde azulado */
+    .producto.mandarina {
+      background-color: #f8d1d6;
+    }
+
+    .producto.sandia {
+      background-color: #d2f8d2;
+    }
+
+    .producto.uva {
+      background-color: #d1e7f8;
+    }
+
+    .producto.durazno {
+      background-color: #fff2cc;
+    }
+
+    .producto.neutro {
+      background-color: #f5f5f5;
+    }
+
+    .producto.carbon {
+      background-color: #dcdcdc;
+    }
+
+    .producto.mandarina a {
+      background: red;
+    }
+
+    .producto.sandia a {
+      background: green;
+    }
+
+    .producto.uva a {
+      background: blue;
+    }
+
+    .producto.durazno a {
+      background: gold;
+      color: black;
+    }
+
+    .producto.neutro a {
+      background: white;
+      color: black;
+    }
+
+    .producto.carbon a {
+      background: black;
+    }
+
+    .boton-pedido {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .boton-pedido button {
+      background-color: #33bfa6;
       color: white;
-      border: 2px solid #c2185b; /* rosa mexicano */
       padding: 10px 20px;
+      border: 2px solid #c2185b; /* rosa mexicano */
+      border-radius: 5px;
       font-size: 16px;
-      border-radius: 6px;
       cursor: pointer;
-      display: block;
-      margin: 30px auto 0;
     }
 
-    button:hover {
-      background-color: #1f6b6b;
+    .boton-pedido button:hover {
+      background-color: #29a78d;
     }
   </style>
 </head>
 <body>
-  <div style="text-align: center;">
-  <img src="logo.png" alt="Logo SorprendARTE" style="max-width: 300px;">
-</div>
+
+  <div class="logo">
+    <img src="logo.png" alt="Logo SorprendARTE">
+  </div>
 
   <div class="container">
+
     <div class="producto uva">
-      <img src="https://raw.githubusercontent.com/SorprendartePedidos/SorprendArte-Pedidos/main/uva.png" alt="Jabón con Aroma a Uva">
+      <h3>Jabón con Aroma a Uva</h3>
       <a href="info_uva.html">Imagen e info.</a>
-      <p>Jabón con Aroma a Uva</p>
       <input type="number" placeholder="Cantidad" min="1">
     </div>
 
     <div class="producto durazno">
-      <img src="https://raw.githubusercontent.com/SorprendartePedidos/SorprendArte-Pedidos/main/Durazno.png" alt="Jabón con Aroma a Durazno">
+      <h3>Jabón con Aroma a Durazno</h3>
       <a href="info_durazno.html">Imagen e info.</a>
-      <p>Jabón con Aroma a Durazno</p>
       <input type="number" placeholder="Cantidad" min="1">
     </div>
 
     <div class="producto mandarina">
-      <img src="https://raw.githubusercontent.com/SorprendartePedidos/SorprendArte-Pedidos/main/mandarina.png" alt="Jabón con Aroma a Mandarina">
+      <h3>Jabón con Aroma a Mandarina</h3>
       <a href="info_mandarina.html">Imagen e info.</a>
-      <p>Jabón con Aroma a Mandarina</p>
       <input type="number" placeholder="Cantidad" min="1">
     </div>
 
     <div class="producto sandia">
-      <img src="https://raw.githubusercontent.com/SorprendartePedidos/SorprendArte-Pedidos/main/sandía.png" alt="Jabón con Aroma a Sandía">
+      <h3>Jabón con Aroma a Sandía</h3>
       <a href="info_sandia.html">Imagen e info.</a>
-      <p>Jabón con Aroma a Sandía</p>
       <input type="number" placeholder="Cantidad" min="1">
     </div>
 
-    <div class="producto jabon0">
-      <img src="https://raw.githubusercontent.com/SorprendartePedidos/SorprendArte-Pedidos/main/o%25aroma0%25color.png" alt="Jabón 0% Aroma, 0% Color">
+    <div class="producto neutro">
+      <h3>Jabón 0% Aroma, 0% Color</h3>
       <a href="info_jabon0.html">Imagen e info.</a>
-      <p>Jabón neutro sin aroma ni color</p>
       <input type="number" placeholder="Cantidad" min="1">
     </div>
 
     <div class="producto carbon">
-      <img src="https://raw.githubusercontent.com/SorprendartePedidos/SorprendArte-Pedidos/main/carbonactivado.png" alt="Jabón de Carbón Activado">
+      <h3>Jabón de Carbón Activado</h3>
       <a href="info_carbon.html">Imagen e info.</a>
-      <p>Jabón de Carbón Activado</p>
       <input type="number" placeholder="Cantidad" min="1">
     </div>
+
   </div>
 
-  <br>
-  <button onclick="window.location.href='pedidos.html'">Hacer pedido</button>
+  <div class="boton-pedido">
+    <button onclick="window.location.href='pedidos.html'">Hacer pedido</button>
+  </div>
+
 </body>
 </html>

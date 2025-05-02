@@ -3,99 +3,85 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Resumen de tu pedido</title>
+  <title>Confirmar pedido - SorprendARTE</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #fefefe;
+      background-color: #f0f8ff;
       padding: 2rem;
-      text-align: center;
     }
     h1 {
-      color: #8b1e3f;
-    }
-    .resumen {
-      margin-bottom: 2rem;
+      text-align: center;
+      color: #39b7b0;
     }
     form {
-      max-width: 400px;
+      max-width: 500px;
       margin: 0 auto;
-      text-align: left;
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
-    label {
+    input, button {
       display: block;
-      margin-top: 1rem;
-    }
-    input {
       width: 100%;
-      padding: 8px;
-      margin-top: 4px;
-      border-radius: 4px;
+      margin-bottom: 1rem;
+      padding: 10px;
+      border-radius: 5px;
       border: 1px solid #ccc;
-    }
-    .boton-confirmar {
-      display: block;
-      margin: 2rem auto;
-      background-color: #8b1e3f;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 6px;
       font-size: 16px;
-      cursor: pointer;
     }
-    .boton-confirmar:hover {
-      background-color: #a82a53;
+    button {
+      background-color: #39b7b0;
+      color: white;
+      border: 2px solid #e48a97;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #2ca59d;
     }
   </style>
 </head>
 <body>
 
-  <h1>Resumen de tu pedido</h1>
+  <h1>Confirmar pedido</h1>
 
-  <div class="resumen">
-    <p>Jabón de uva: <strong id="res-uva">0</strong></p>
-    <p>Jabón de durazno: <strong id="res-durazno">0</strong></p>
-    <p>Jabón de mandarina: <strong id="res-mandarina">0</strong></p>
-    <p>Jabón de sandía: <strong id="res-sandia">0</strong></p>
-    <p>Jabón 0% aroma/color: <strong id="res-neutro">0</strong></p>
-    <p>Jabón de carbón activado: <strong id="res-carbon">0</strong></p>
-  </div>
+  <form action="https://formsubmit.co/sorprendarte01@gmail.com" method="POST">
+    <!-- Redirección después del envío -->
+    <input type="hidden" name="_next" value="gracias.html">
+    <input type="hidden" name="_captcha" value="false">
 
-  <form id="pedidoForm" onsubmit="enviarPedido(event)">
-    <label for="nombre">Nombre completo *</label>
-    <input type="text" id="nombre" name="nombre" required>
+    <!-- Datos personales -->
+    <input type="text" name="nombre" placeholder="Nombre completo" required>
+    <input type="email" name="correo" placeholder="Correo electrónico" required>
+    <input type="text" name="estado" placeholder="Estado" required>
+    <input type="text" name="colonia" placeholder="Colonia" required>
+    <input type="text" name="direccion" placeholder="Dirección (calle y número)" required>
 
-    <label for="correo">Correo electrónico *</label>
-    <input type="email" id="correo" name="correo" required>
+    <!-- Productos -->
+    <input type="number" name="uva" placeholder="Cantidad de jabones de Uva" min="0">
+    <input type="number" name="durazno" placeholder="Cantidad de jabones de Durazno" min="0">
+    <input type="number" name="mandarina" placeholder="Cantidad de jabones de Mandarina" min="0">
+    <input type="number" name="sandia" placeholder="Cantidad de jabones de Sandía" min="0">
+    <input type="number" name="neutro" placeholder="Cantidad de jabones 0% aroma y color" min="0">
+    <input type="number" name="carbon" placeholder="Cantidad de jabones de Carbón activado" min="0">
 
-    <label for="estado">Estado *</label>
-    <input type="text" id="estado" name="estado" required>
+    <!-- Link de Google Maps -->
+    <input type="hidden" name="maps_link" id="maps_link">
 
-    <label for="colonia">Colonia *</label>
-    <input type="text" id="colonia" name="colonia" required>
-
-    <label for="direccion">Dirección *</label>
-    <input type="text" id="direccion" name="direccion" required>
-
-    <button type="submit" class="boton-confirmar">Confirmar pedido</button>
+    <!-- Botón de enviar -->
+    <button type="submit">Confirmar pedido</button>
   </form>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
-    document.getElementById('res-uva').textContent = params.get('uva') || '0';
-    document.getElementById('res-durazno').textContent = params.get('durazno') || '0';
-    document.getElementById('res-mandarina').textContent = params.get('mandarina') || '0';
-    document.getElementById('res-sandia').textContent = params.get('sandia') || '0';
-    document.getElementById('res-neutro').textContent = params.get('neutro') || '0';
-    document.getElementById('res-carbon').textContent = params.get('carbon') || '0';
-
-    function enviarPedido(event) {
-      event.preventDefault();
-      const nombre = document.getElementById('nombre').value;
-      alert(`Tu pedido ha sido enviado. ¡Muchas gracias por elegirnos, ${nombre}!`);
-      // Aquí puedes redirigir a otra página o guardar la información
-    }
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function () {
+      const direccionCompleta = `${form.direccion.value}, ${form.colonia.value}, ${form.estado.value}`;
+      const direccionEnlace = encodeURIComponent(direccionCompleta);
+      document.getElementById('maps_link').value =
+        `https://www.google.com/maps/search/?api=1&query=${direccionEnlace}`;
+    });
   </script>
 
 </body>

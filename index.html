@@ -1,185 +1,146 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SorprendARTE - Tienda de Jabones Personalizados</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SorprendARTE - Tienda de Jabones</title>
   <style>
     body {
       font-family: Segoe UI, sans-serif;
       background: url('fondo2.png') no-repeat center center fixed;
       background-size: cover;
-      margin: 0;
       padding: 2rem;
+      margin: 0;
     }
-
+    h1 {
+      text-align: center;
+    }
     .logo {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 2rem;
+      display: block;
+      margin: 0 auto 2rem;
+      max-width: 250px;
     }
-
-    .logo img {
-      max-width: 300px;
-    }
-
     .container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 20px;
+      gap: 1rem;
     }
-
     .producto {
       width: 200px;
+      text-align: center;
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       padding: 10px;
-      text-align: center;
     }
-
-    .producto h3 {
-      margin-top: 0;
+    .producto img {
+      width: 100%;
+      border-radius: 8px;
     }
-
     .producto a {
       display: block;
-      margin-top: 10px;
-      color: white;
+      margin: 10px auto 5px;
       padding: 8px;
+      color: white;
       text-decoration: none;
       border-radius: 4px;
     }
 
-    .producto input {
-      margin-top: 10px;
-      padding: 5px;
-      width: 100%;
-      box-sizing: border-box;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-    }
+    /* Colores del botón por producto */
+    .mandarina a { background: #ff4d4d; }  /* Rojo */
+    .sandia a { background: #4CAF50; }     /* Verde */
+    .uva a { background: #2196F3; }        /* Azul */
+    .durazno a { background: #FFD700; color: black; } /* Amarillo */
+    .jabon0 a { background: #ffffff; color: black; }  /* Blanco */
+    .carbon a { background: #000000; }     /* Negro */
 
-    .producto.mandarina {
-      background-color: #f8d1d6;
-    }
+    /* Colores pastel de fondo para cada producto */
+    .mandarina { background-color: #ffe5e5; }
+    .sandia { background-color: #e6ffe6; }
+    .uva { background-color: #e6f0ff; }
+    .durazno { background-color: #fff9e6; }
+    .jabon0 { background-color: #f9f9f9; }
+    .carbon { background-color: #e0e0e0; }
 
-    .producto.sandia {
-      background-color: #d2f8d2;
-    }
-
-    .producto.uva {
-      background-color: #d1e7f8;
-    }
-
-    .producto.durazno {
-      background-color: #fff2cc;
-    }
-
-    .producto.neutro {
-      background-color: #f5f5f5;
-    }
-
-    .producto.carbon {
-      background-color: #dcdcdc;
-    }
-
-    .producto.mandarina a {
-      background: red;
-    }
-
-    .producto.sandia a {
-      background: green;
-    }
-
-    .producto.uva a {
-      background: blue;
-    }
-
-    .producto.durazno a {
-      background: gold;
-      color: black;
-    }
-
-    .producto.neutro a {
-      background: white;
-      color: black;
-    }
-
-    .producto.carbon a {
-      background: black;
-    }
-
-    .boton-pedido {
+    /* Orden especial: los últimos dos productos debajo en pantallas grandes */
+    .grupo-superior {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
-      margin-top: 30px;
+      gap: 1rem;
+    }
+    .grupo-inferior {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
     }
 
-    .boton-pedido button {
-      background-color: #33bfa6;
+    /* Botón de pedido */
+    .boton-pedido {
+      display: block;
+      margin: 2rem auto 0;
+      background-color: #2aa198;  /* Verde azulado */
       color: white;
-      padding: 10px 20px;
-      border: 2px solid #c2185b; /* rosa mexicano */
-      border-radius: 5px;
-      font-size: 16px;
+      border: 2px solid #c2185b;  /* Rosa mexicano */
+      padding: 12px 24px;
+      font-size: 1rem;
+      border-radius: 6px;
       cursor: pointer;
     }
-
-    .boton-pedido button:hover {
-      background-color: #29a78d;
+    .boton-pedido:hover {
+      background-color: #268d87;
     }
   </style>
 </head>
 <body>
 
-  <div class="logo">
-    <img src="logo.png" alt="Logo SorprendARTE">
-  </div>
+  <img src="logo.png" alt="Logo SorprendARTE" class="logo">
 
-  <div class="container">
-
+  <div class="grupo-superior">
     <div class="producto uva">
-      <h3>Jabón con Aroma a Uva</h3>
+      <img src="uva.png" alt="Jabón con Aroma a Uva">
       <a href="info_uva.html">Imagen e info.</a>
+      <p>Jabón con Aroma a Uva</p>
       <input type="number" placeholder="Cantidad" min="1">
     </div>
-
     <div class="producto durazno">
-      <h3>Jabón con Aroma a Durazno</h3>
+      <img src="Durazno.png" alt="Jabón con Aroma a Durazno">
       <a href="info_durazno.html">Imagen e info.</a>
+      <p>Jabón con Aroma a Durazno</p>
       <input type="number" placeholder="Cantidad" min="1">
     </div>
-
     <div class="producto mandarina">
-      <h3>Jabón con Aroma a Mandarina</h3>
+      <img src="mandarina.png" alt="Jabón con Aroma a Mandarina">
       <a href="info_mandarina.html">Imagen e info.</a>
+      <p>Jabón con Aroma a Mandarina</p>
       <input type="number" placeholder="Cantidad" min="1">
     </div>
-
     <div class="producto sandia">
-      <h3>Jabón con Aroma a Sandía</h3>
+      <img src="sandía.png" alt="Jabón con Aroma a Sandía">
       <a href="info_sandia.html">Imagen e info.</a>
+      <p>Jabón con Aroma a Sandía</p>
       <input type="number" placeholder="Cantidad" min="1">
     </div>
+  </div>
 
-    <div class="producto neutro">
-      <h3>Jabón 0% Aroma, 0% Color</h3>
+  <div class="grupo-inferior">
+    <div class="producto jabon0">
+      <img src="o%25aroma0%25color.png" alt="Jabón sin aroma ni color">
       <a href="info_jabon0.html">Imagen e info.</a>
+      <p>Jabón neutro sin aroma ni color</p>
       <input type="number" placeholder="Cantidad" min="1">
     </div>
-
     <div class="producto carbon">
-      <h3>Jabón de Carbón Activado</h3>
+      <img src="carbonactivado.png" alt="Jabón de carbón activado">
       <a href="info_carbon.html">Imagen e info.</a>
+      <p>Jabón de Carbón Activado</p>
       <input type="number" placeholder="Cantidad" min="1">
     </div>
-
   </div>
 
-  <div class="boton-pedido">
-    <button onclick="window.location.href='pedidos.html'">Hacer pedido</button>
-  </div>
+  <button class="boton-pedido" onclick="window.location.href='pedidos.html'">Hacer pedido</button>
 
 </body>
 </html>

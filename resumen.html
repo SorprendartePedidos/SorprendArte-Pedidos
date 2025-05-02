@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resumen del Pedido</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .resumen {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .resumen h2 {
+      color: #555;
+      margin-top: 1rem;
+    }
+    .resumen ul {
+      list-style: none;
+      padding: 0;
+    }
+    .resumen li {
+      margin: 0.5rem 0;
+      background: #f1f1f1;
+      padding: 0.5rem;
+      border-radius: 5px;
+    }
+    .volver {
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .volver a {
+      text-decoration: none;
+      background-color: #39b7b0;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Resumen de tu Pedido</h1>
+  <div class="resumen">
+    <h2>Productos solicitados</h2>
+    <ul id="lista-productos"></ul>
+
+    <h2>Datos del cliente</h2>
+    <ul id="datos-cliente"></ul>
+  </div>
+
+  <div class="volver">
+    <a href="index.html">Volver al inicio</a>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+
+    const productos = [
+      { nombre: "Jabón con Aroma a Uva", campo: "uva" },
+      { nombre: "Jabón con Aroma a Durazno", campo: "durazno" },
+      { nombre: "Jabón con Aroma a Mandarina", campo: "mandarina" },
+      { nombre: "Jabón con Aroma a Sandía", campo: "sandia" },
+      { nombre: "Jabón 0% Aroma, 0% Color", campo: "neutro" },
+      { nombre: "Jabón de Carbón Activado", campo: "carbon" },
+    ];
+
+    const listaProductos = document.getElementById("lista-productos");
+    productos.forEach(p => {
+      const cantidad = params.get(p.campo);
+      if (cantidad && cantidad !== "0") {
+        const li = document.createElement("li");
+        li.textContent = `${p.nombre}: ${cantidad}`;
+        listaProductos.appendChild(li);
+      }
+    });
+
+    const datos = [
+      { campo: "nombre", label: "Nombre completo" },
+      { campo: "correo", label: "Correo electrónico" },
+      { campo: "estado", label: "Estado" },
+      { campo: "municipio", label: "Municipio" },
+      { campo: "colonia", label: "Colonia" },
+      { campo: "direccion", label: "Dirección" }
+    ];
+
+    const datosCliente = document.getElementById("datos-cliente");
+    datos.forEach(d => {
+      const valor = params.get(d.campo);
+      if (valor) {
+        const li = document.createElement("li");
+        li.textContent = `${d.label}: ${valor}`;
+        datosCliente.appendChild(li);
+      }
+    });
+  </script>
+</body>
+</html>

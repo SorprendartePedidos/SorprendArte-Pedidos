@@ -1,152 +1,102 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Resumen de tu Pedido</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resumen de tu pedido</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      max-width: 600px;
-      margin: 2rem auto;
-      padding: 1rem;
+      background-color: #fefefe;
+      padding: 2rem;
       text-align: center;
     }
     h1 {
-      margin-bottom: 1rem;
+      color: #8b1e3f;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 1.5rem;
+    .resumen {
+      margin-bottom: 2rem;
     }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 0.5rem;
-    }
-    th {
-      background: #f0f0f0;
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      text-align: left;
     }
     label {
       display: block;
-      text-align: left;
-      margin: 0.5rem 0 0.2rem;
-    }
-    input[type="text"],
-    input[type="email"],
-    textarea {
-      width: 100%;
-      padding: 0.5rem;
-      margin-bottom: 0.8rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-    input:invalid {
-      border-color: red;
-    }
-    button {
-      background: #39b7b0;
-      color: white;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
-      border-radius: 5px;
-      cursor: pointer;
       margin-top: 1rem;
     }
-    button:disabled {
-      background: #ccc;
-      cursor: not-allowed;
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    .boton-confirmar {
+      display: block;
+      margin: 2rem auto;
+      background-color: #8b1e3f;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .boton-confirmar:hover {
+      background-color: #a82a53;
     }
   </style>
 </head>
 <body>
-  <h1>Resumen de tu Pedido</h1>
-  <table id="resumen">
-    <thead>
-      <tr><th>Producto</th><th>Cantidad</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
 
-  <!-- Campos de contacto obligatorios -->
-  <form id="formPedido">
+  <h1>Resumen de tu pedido</h1>
+
+  <div class="resumen">
+    <p>Jabón de uva: <strong id="res-uva">0</strong></p>
+    <p>Jabón de durazno: <strong id="res-durazno">0</strong></p>
+    <p>Jabón de mandarina: <strong id="res-mandarina">0</strong></p>
+    <p>Jabón de sandía: <strong id="res-sandia">0</strong></p>
+    <p>Jabón 0% aroma/color: <strong id="res-neutro">0</strong></p>
+    <p>Jabón de carbón activado: <strong id="res-carbon">0</strong></p>
+  </div>
+
+  <form id="pedidoForm" onsubmit="enviarPedido(event)">
     <label for="nombre">Nombre completo *</label>
     <input type="text" id="nombre" name="nombre" required>
 
     <label for="correo">Correo electrónico *</label>
     <input type="email" id="correo" name="correo" required>
 
-       <label for="estado">Estado *</label>
+    <label for="estado">Estado *</label>
     <input type="text" id="estado" name="estado" required>
 
     <label for="colonia">Colonia *</label>
     <input type="text" id="colonia" name="colonia" required>
 
-    <label for="direccion">Dirección (calle y número) *</label>
-    <textarea id="direccion" name="direccion" rows="3" required></textarea>
+    <label for="direccion">Dirección *</label>
+    <input type="text" id="direccion" name="direccion" required>
 
-    <button type="submit" id="confirmar">Confirmar pedido</button>
+    <button type="submit" class="boton-confirmar">Confirmar pedido</button>
   </form>
 
   <script>
-    // 1. Construir la tabla de resumen
-    const params = new URLSearchParams(location.search);
-    const productos = {
-      uva: 'Uva',
-      durazno: 'Durazno',
-      mandarina: 'Mandarina',
-      sandia: 'Sandía',
-      neutro: '0% Aroma/Color',
-      carbon: 'Carbón Activado'
-    };
-    const tbody = document.querySelector('#resumen tbody');
-    const pedidoLines = [];
+    const params = new URLSearchParams(window.location.search);
+    document.getElementById('res-uva').textContent = params.get('uva') || '0';
+    document.getElementById('res-durazno').textContent = params.get('durazno') || '0';
+    document.getElementById('res-mandarina').textContent = params.get('mandarina') || '0';
+    document.getElementById('res-sandia').textContent = params.get('sandia') || '0';
+    document.getElementById('res-neutro').textContent = params.get('neutro') || '0';
+    document.getElementById('res-carbon').textContent = params.get('carbon') || '0';
 
-    for (let key in productos) {
-      const qty = parseInt(params.get(key)) || 0;
-      if (qty > 0) {
-        tbody.insertAdjacentHTML('beforeend',
-          `<tr><td>${productos[key]}</td><td>${qty}</td></tr>`
-        );
-        pedidoLines.push(`${productos[key]}: ${qty}`);
-      }
+    function enviarPedido(event) {
+      event.preventDefault();
+      const nombre = document.getElementById('nombre').value;
+      alert(`Tu pedido ha sido enviado. ¡Muchas gracias por elegirnos, ${nombre}!`);
+      // Aquí puedes redirigir a otra página o guardar la información
     }
-    if (!pedidoLines.length) {
-      tbody.innerHTML = '<tr><td colspan="2">No seleccionaste ningún jabón.</td></tr>';
-    }
-
-    // 2. Gestionar el envío
-    document.getElementById('formPedido').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const nombre = document.getElementById('nombre').value.trim();
-      const correo = document.getElementById('correo').value.trim();
-      const direccion = document.getElementById('direccion').value.trim();
-      if (!nombre || !correo || !direccion) {
-        alert('Por favor completa todos los campos obligatorios.');
-        return;
-      }
-
-      // 3. Preparar mailto
-      const subject = encodeURIComponent('Nuevo pedido SorprendARTE de ' + nombre);
-      const bodyLines = [
-        `Nombre: ${nombre}`,
-        `Correo: ${correo}`,
-        `Dirección: ${direccion}`,
-        '',
-        'Resumen de pedido:',
-        ...pedidoLines
-      ];
-      const body = encodeURIComponent(bodyLines.join('\n'));
-      window.location.href = `mailto:sorprendarte01@gmail.com?subject=${subject}&body=${body}`;
-
-      // 4. Mostrar mensaje de confirmación
-      document.body.innerHTML = `
-        <h1>Tu pedido ha sido enviado, ${nombre}!</h1>
-        <p>¡Muchas gracias por elegirnos!</p>
-      `;
-    });
   </script>
+
 </body>
 </html>

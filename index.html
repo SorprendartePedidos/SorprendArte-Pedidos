@@ -1,4 +1,3 @@
-<!-- index.html content -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,117 +5,127 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SorprendARTE - Tienda de Jabones Personalizados</title>
   <style>
-   body {
-  font-family: Segoe UI, sans-serif;
-  background-image: url('https://raw.githubusercontent.com/SorprendartePedidos/SorprendArte-Pedidos/main/fondo2.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  padding: 2rem;
-}
+    body {
+      font-family: Segoe UI, sans-serif;
+      background: white url('fondo2.png') no-repeat center center fixed;
+      background-size: cover;
+      padding: 2rem;
+      margin: 0;
+    }
+
     h1 {
       color: #8b1e3f;
       text-align: center;
     }
+
     .container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px; /* espacio entre cuadros */
-}
-  
- .producto {
-  display: inline-block;
-  vertical-align: top;
-}
- width: 200px;
-  margin: 10px;
-  text-align: center;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  background-color: #fdfaf5; /* blanco pastel */
-}
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .producto {
+      width: 200px;
+      margin: 10px;
+      text-align: center;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      background-color: #fdfcfa; /* blanco pastel */
+    }
+
     .producto img {
       width: 100%;
       border-radius: 8px;
     }
+
     .producto a {
       display: block;
       margin-top: 10px;
-      background: #8b1e3f;
-      color: white;
       padding: 8px;
       text-decoration: none;
       border-radius: 4px;
+      color: white;
     }
+
+    /* Colores personalizados por tipo */
+    .jabon0 a { background: white; color: black; }
+    .carbon a { background: black; }
+    .mandarina a { background: red; }
+    .sandia a { background: green; }
+    .uva a { background: blue; }
+    .durazno a { background: yellow; color: black; }
+
     .producto a:hover {
-      background: #a82a53;
+      opacity: 0.9;
     }
-    /* —————————————— */
-/* Media Query para pantallas ≥ 1024px */
-@media (min-width: 1024px) {
-  /* Aseguramos que los productos sigan en fila */
-  .container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-  }
-  /* Forzamos que el 5º y 6º producto bajen debajo */
-  .container .producto:nth-child(5),
-  .container .producto:nth-child(6) {
-    order: 2;
-  }
-}
-/* —————————————— */
+
+    button {
+      background-color: #2c8f8e; /* verde azulado */
+      color: white;
+      border: 2px solid #c2185b; /* rosa mexicano */
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: block;
+      margin: 30px auto 0;
+    }
+
+    button:hover {
+      background-color: #1f6b6b;
+    }
   </style>
 </head>
 <body>
   <h1>SorprendARTE - Tienda de Jabones Personalizados</h1>
-body {
-  text-align: center;
-}
 
- <div class="container">
-  <div class="producto" style="background-color: #f0f8ff;">
-    <a href="info_uva.html" style="background-color: blue;">Imagen e info.</a>
-    <p>Jabón con Aroma a Uva</p>
-    <input type="number" placeholder="Cantidad" min="1">
+  <div class="container">
+    <div class="producto uva">
+      <img src="https://raw.githubusercontent.com/SorprendartePedidos/SorprendArte-Pedidos/main/uva.png" alt="Jabón con Aroma a Uva">
+      <a href="info_uva.html">Imagen e info.</a>
+      <p>Jabón con Aroma a Uva</p>
+      <input type="number" placeholder="Cantidad" min="1">
+    </div>
+
+    <div class="producto durazno">
+      <img src="https://raw.githubusercontent.com/SorprendartePedidos/SorprendArte-Pedidos/main/Durazno.png" alt="Jabón con Aroma a Durazno">
+      <a href="info_durazno.html">Imagen e info.</a>
+      <p>Jabón con Aroma a Durazno</p>
+      <input type="number" placeholder="Cantidad" min="1">
+    </div>
+
+    <div class="producto mandarina">
+      <img src="https://raw.githubusercontent.com/SorprendartePedidos/SorprendArte-Pedidos/main/mandarina.png" alt="Jabón con Aroma a Mandarina">
+      <a href="info_mandarina.html">Imagen e info.</a>
+      <p>Jabón con Aroma a Mandarina</p>
+      <input type="number" placeholder="Cantidad" min="1">
+    </div>
+
+    <div class="producto sandia">
+      <img src="https://raw.githubusercontent.com/SorprendartePedidos/SorprendArte-Pedidos/main/sandía.png" alt="Jabón con Aroma a Sandía">
+      <a href="info_sandia.html">Imagen e info.</a>
+      <p>Jabón con Aroma a Sandía</p>
+      <input type="number" placeholder="Cantidad" min="1">
+    </div>
+
+    <div class="producto jabon0">
+      <img src="https://raw.githubusercontent.com/SorprendartePedidos/SorprendArte-Pedidos/main/o%25aroma0%25color.png" alt="Jabón 0% Aroma, 0% Color">
+      <a href="info_jabon0.html">Imagen e info.</a>
+      <p>Jabón neutro sin aroma ni color</p>
+      <input type="number" placeholder="Cantidad" min="1">
+    </div>
+
+    <div class="producto carbon">
+      <img src="https://raw.githubusercontent.com/SorprendartePedidos/SorprendArte-Pedidos/main/carbonactivado.png" alt="Jabón de Carbón Activado">
+      <a href="info_carbon.html">Imagen e info.</a>
+      <p>Jabón de Carbón Activado</p>
+      <input type="number" placeholder="Cantidad" min="1">
+    </div>
   </div>
-  <div class="producto" style="background-color: #fffde7;">
-    <a href="info_durazno.html" style="background-color: gold;">Imagen e info.</a>
-    <p>Jabón con Aroma a Durazno</p>
-    <input type="number" placeholder="Cantidad" min="1">
-  </div>
-  <div class="producto" style="background-color: #ffe6e6;">
-    <a href="info_mandarina.html" style="background-color: red;">Imagen e info.</a>
-    <p>Jabón con Aroma a Mandarina</p>
-    <input type="number" placeholder="Cantidad" min="1">
-  </div>
-  <div class="producto" style="background-color: #e8f5e9;">
-    <a href="info_sandia.html" style="background-color: green;">Imagen e info.</a>
-    <p>Jabón con Aroma a Sandía</p>
-    <input type="number" placeholder="Cantidad" min="1">
-  </div>
-  <div class="producto" style="background-color: #ffffff;">
-    <a href="info_jabon0.html" style="background-color: white; color: black; border: 1px solid #ccc;">Imagen e info.</a>
-    <p>Jabón neutro sin aroma ni color</p>
-    <input type="number" placeholder="Cantidad" min="1">
-  </div>
-  <div class="producto" style="background-color: #f5f5f5;">
-    <a href="info_carbon.html" style="background-color: black;">Imagen e info.</a>
-    <p>Jabón de Carbón Activado</p>
-    <input type="number" placeholder="Cantidad" min="1">
-  </div>
-</div>
 
   <br>
-<div style="text-align: center;">
-  <button onclick="window.location.href='pedidos.html'" style="background-color:#2ecc71; color:white;     border: 2px solid #c2185b; /* rosa mexicano */
-; padding: 10px 20px; font-size: 16px; border-radius: 5px; display: block; margin: 30px auto; cursor: pointer;">
-  Hacer pedido
-</button>
-
-</div>
+  <button onclick="window.location.href='pedidos.html'">Hacer pedido</button>
 </body>
 </html>

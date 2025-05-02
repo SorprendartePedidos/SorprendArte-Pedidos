@@ -46,6 +46,22 @@
     .producto a:hover {
       background: #a82a53;
     }
+    /* —————————————— */
+/* Media Query para pantallas ≥ 1024px */
+@media (min-width: 1024px) {
+  /* Aseguramos que los productos sigan en fila */
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  /* Forzamos que el 5º y 6º producto bajen debajo */
+  .container .producto:nth-child(5),
+  .container .producto:nth-child(6) {
+    order: 2;
+  }
+}
+/* —————————————— */
   </style>
 </head>
 <body>

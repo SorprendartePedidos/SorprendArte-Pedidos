@@ -3,87 +3,128 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Resumen de tu pedido</title>
+  <title>Resumen del Pedido</title>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    emailjs.init('eNlwbg1TntZXdHYaM'); // Tu Public Key
+  </script>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f2f2f2;
+      background-color: #f8f8f8;
       padding: 2rem;
-      text-align: center;
     }
-    .resumen {
-      background: white;
-      border-radius: 8px;
-      padding: 2rem;
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    form {
       max-width: 500px;
       margin: auto;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
     }
     input, textarea {
-      width: 90%;
-      margin: 0.5rem 0;
-      padding: 10px;
-      font-size: 14px;
-      border-radius: 5px;
+      width: 100%;
+      padding: 0.5rem;
+      border-radius: 4px;
       border: 1px solid #ccc;
     }
     button {
-      background: #39b7b0;
+      margin-top: 2rem;
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #39b7b0;
       color: white;
-      border: 2px solid #c2185b;
-      padding: 12px 20px;
-      border-radius: 6px;
+      border: 2px solid #e91e63;
+      border-radius: 5px;
       font-size: 16px;
       cursor: pointer;
-      margin-top: 1rem;
     }
-    button:hover {
-      background: #2ca59d;
+    .resumen {
+      margin-top: 2rem;
+      background-color: #f1f1f1;
+      padding: 1rem;
+      border-radius: 6px;
     }
   </style>
 </head>
 <body>
-  <div class="resumen">
-    <h2>Resumen de tu pedido</h2>
-    <div id="lista-pedido"></div>
 
-    <form id="formularioPedido" action="confirmacion.html" method="POST">
-      <input type="text" name="nombre" placeholder="Tu nombre" required />
-      <input type="email" name="correo" placeholder="Tu correo electrónico" required />
-      <input type="text" name="estado" placeholder="Estado" required />
-      <input type="text" name="municipio" placeholder="Municipio" required />
-      <input type="text" name="colonia" placeholder="Colonia" required />
-      <textarea name="direccion" placeholder="Dirección completa" required></textarea>
-      <input type="hidden" name="pedidoResumen" id="pedidoResumen" />
-      <button type="submit">Confirmar pedido</button>
-    </form>
-  </div>
+  <h2>Resumen de tu Pedido</h2>
+
+  <form id="pedidoForm">
+    <div id="resumenPedido" class="resumen"></div>
+
+    <label for="nombre">Nombre completo *</label>
+    <input type="text" id="nombre" name="nombre" required>
+
+    <label for="email">Correo electrónico *</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="estado">Estado *</label>
+    <input type="text" id="estado" name="estado" required>
+
+    <label for="municipio">Municipio *</label>
+    <input type="text" id="municipio" name="municipio" required>
+
+    <label for="colonia">Colonia *</label>
+    <input type="text" id="colonia" name="colonia" required>
+
+    <label for="direccion">Dirección completa *</label>
+    <textarea id="direccion" name="direccion" required></textarea>
+
+    <button type="submit">Confirmar Pedido</button>
+  </form>
 
   <script>
-    // Lee los parámetros de la URL
+    // Mostrar productos seleccionados desde la URL
     const params = new URLSearchParams(window.location.search);
-    const productos = {
-      uva: "Jabón con Aroma a Uva",
-      durazno: "Jabón con Aroma a Durazno",
-      mandarina: "Jabón con Aroma a Mandarina",
-      sandia: "Jabón con Aroma a Sandía",
-      neutro: "Jabón 0% Aroma, 0% Color",
-      carbon: "Jabón de Carbón Activado"
-    };
+    const resumen = document.getElementById('resumenPedido');
+    let productos = '';
 
-    let lista = "";
-    let resumen = "";
-
-    for (let key in productos) {
-      const cantidad = params.get(key);
-      if (cantidad && parseInt(cantidad) > 0) {
-        lista += `<p><strong>${productos[key]}</strong>: ${cantidad}</p>`;
-        resumen += `${productos[key]}: ${cantidad}\n`;
+    params.forEach((value, key) => {
+      if (parseInt(value) > 0) {
+        const nombre = key.charAt(0).toUpperCase() + key.slice(1);
+        productos += `${nombre}: ${value}<br>`;
       }
+    });
+
+    if (productos === '') {
+      resumen.innerHTML = '<strong>No se seleccionó ningún producto.</strong>';
+    } else {
+      resumen.innerHTML = `<strong>Productos:</strong><br>${productos}`;
     }
 
-    document.getElementById("lista-pedido").innerHTML = lista;
-    document.getElementById("pedidoResumen").value = resumen;
+    // Enviar con EmailJS
+    document.getElementById('pedidoForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const templateParams = {
+        nombre: document.getElementById('nombre').value,
+        email: document.getElementById('email').value,
+        estado: document.getElementById('estado').value,
+        municipio: document.getElementById('municipio').value,
+        colonia: document.getElementById('colonia').value,
+        direccion: document.getElementById('direccion').value,
+        pedido: resumen.innerText
+      };
+
+      emailjs.send('service_gapodll', 'template_kmt7yxo', templateParams)
+        .then(function(response) {
+          alert("¡Tu pedido ha sido enviado, muchas gracias por elegirnos!");
+          window.location.href = `resumen.html?pedido=${encodeURIComponent(resumen.innerHTML)}&nombre=${templateParams.nombre}`;
+        }, function(error) {
+          alert("Hubo un error al enviar el pedido. Intenta de nuevo.");
+          console.error(error);
+        });
+    });
   </script>
 </body>
 </html>

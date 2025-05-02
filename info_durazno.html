@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: Segoe UI, sans-serif;
-      background-color: #fff9db; /* fondo pastel amarillo */
+      background-color: #fff9db; /* pastel amarillo */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -18,34 +18,51 @@
       margin: 0;
     }
     h1 {
-      color: #f1c40f; /* amarillo fuerte */
+      color: #f1c40f; /* título en amarillo fuerte */
       margin-bottom: 1rem;
     }
+    .contenido {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
     img {
-      max-width: 300px;
-      border-radius: 8px;
+      width: 250px;
+      height: auto;
+      border-radius: 12px;
       margin-bottom: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
     p {
       color: #333;
+      font-size: 1.1rem;
       max-width: 400px;
       margin-bottom: 1.5rem;
-      font-size: 1.1rem;
     }
     a {
       color: #f1c40f;
       font-weight: bold;
       text-decoration: none;
       font-size: 1rem;
+      border: 2px solid #f1c40f;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background 0.3s;
+    }
+    a:hover {
+      background: #f1c40f;
+      color: white;
     }
   </style>
 </head>
 <body>
   <h1>Jabón con Aroma a Durazno</h1>
-  <img src="img/Durazno.png" alt="Jabón de durazno" />
-  <p>Dulce y suave aroma a durazno. No contiene fruta real.
-  Ingredientes: Glicerina de aceite vegetal de coco, aroma a durazno, Colorante amarillo. 
-  Peso *al momento de empacar*: 85g</p>
-  <a href="index.html">&#8592; Volver al pedido</a>
+  <div class="contenido">
+    <img src="img/Durazno.png" alt="Jabón con Aroma a Durazno" />
+    <p>Dulce y suave aroma a durazno. Ideal para quienes buscan frescura y ternura en cada baño. No contiene fruta real.
+    Ingredientes: Glicerina de aceite vegetal de coco, aroma a durazno, Colorante amarillo. 
+    Peso *al momento de empacar*: 85g</p>
+    <a href="index.html">&#8592; Volver al pedido</a>
+  </div>
 </body>
 </html>

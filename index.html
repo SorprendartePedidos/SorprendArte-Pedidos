@@ -3,136 +3,137 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SorprendARTE - Tienda de Jabones Personalizados</title>
+  <title>SorprendARTE - Tienda de Jabones</title>
   <style>
     body {
       font-family: Segoe UI, sans-serif;
-      background-image: url('img/fondo2.png');
+      background: url('fondo3.png') no-repeat center center fixed;
       background-size: cover;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
-      background-position: center;
-      margin: 0;
       padding: 2rem;
+      margin: 0;
     }
-
-    header {
+    h1 {
       text-align: center;
-      margin-bottom: 2rem;
     }
-
-    header img {
-      max-width: 300px;
+    .logo {
+      display: block;
+      margin: 0 auto 2rem;
+      max-width: 250px;
     }
-
     .container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 1rem;
     }
-
     .producto {
       width: 200px;
       text-align: center;
       border-radius: 8px;
-      background-color: white;
-      padding: 10px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 10px;
     }
-
+    .producto img {
+      width: 100%;
+      border-radius: 8px;
+    }
     .producto a {
       display: block;
-      margin-top: 10px;
+      margin: 10px auto 5px;
       padding: 8px;
-      text-decoration: none;
       color: white;
+      text-decoration: none;
       border-radius: 4px;
     }
 
-    .uva a        { background-color: blue; }
-    .durazno a    { background-color: gold; }
-    .mandarina a  { background-color: red; }
-    .sandia a     { background-color: green; }
-    .blanco a     { background-color: white; color: black; border: 2px solid #ccc; }
-    .carbon a     { background-color: black; }
+    /* Colores del botón por producto */
+    .mandarina a { background: #ff4d4d; }  /* Rojo */
+    .sandia a { background: #4CAF50; }     /* Verde */
+    .uva a { background: #2196F3; }        /* Azul */
+    .durazno a { background: #FFD700; color: black; } /* Amarillo */
+    .jabon0 a { background: #ffffff; color: black; }  /* Blanco */
+    .carbon a { background: #000000; }     /* Negro */
 
-    input[type="number"] {
-      width: 80%;
-      margin-top: 5px;
-      padding: 5px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
+    /* Colores pastel de fondo para cada producto */
+    .mandarina { background-color: #ffe5e5; }
+    .sandia { background-color: #e6ffe6; }
+    .uva { background-color: #e6f0ff; }
+    .durazno { background-color: #fff9e6; }
+    .jabon0 { background-color: #f9f9f9; }
+    .carbon { background-color: #e0e0e0; }
+
+    /* Orden especial: los últimos dos productos debajo en pantallas grandes */
+    .grupo-superior {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .grupo-inferior {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
     }
 
+    /* Botón de pedido */
     .boton-pedido {
       display: block;
       margin: 2rem auto 0;
-      background-color: #39b7b0;
+      background-color: #2aa198;  /* Verde azulado */
       color: white;
-      border: 3px solid #c2185b;
+      border: 2px solid #c2185b;  /* Rosa mexicano */
       padding: 12px 24px;
+      font-size: 1rem;
       border-radius: 6px;
-      font-size: 16px;
       cursor: pointer;
     }
-
     .boton-pedido:hover {
-      background-color: #2ca59d;
-    }
-
-    @media (min-width: 768px) {
-      .fila-extra {
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-        margin-top: 1rem;
-      }
+      background-color: #268d87;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <img src="img/logo.png" alt="Logo SorprendARTE">
-  </header>
+  <img src="logo.png" alt="Logo SorprendARTE" class="logo">
 
-  <div class="container">
+  <div class="grupo-superior">
     <div class="producto uva">
-      <img src="img/uva.png" alt="Jabón con Aroma a Uva">
+      <img src="uva.png" alt="Jabón con Aroma a Uva">
       <a href="info_uva.html">Imagen e info.</a>
       <p>Jabón con Aroma a Uva</p>
       <input type="number" placeholder="Cantidad" min="1">
     </div>
     <div class="producto durazno">
-      <img src="img/durazno.png" alt="Jabón con Aroma a Durazno">
+      <img src="Durazno.png" alt="Jabón con Aroma a Durazno">
       <a href="info_durazno.html">Imagen e info.</a>
       <p>Jabón con Aroma a Durazno</p>
       <input type="number" placeholder="Cantidad" min="1">
     </div>
     <div class="producto mandarina">
-      <img src="img/mandarina.png" alt="Jabón con Aroma a Mandarina">
+      <img src="mandarina.png" alt="Jabón con Aroma a Mandarina">
       <a href="info_mandarina.html">Imagen e info.</a>
       <p>Jabón con Aroma a Mandarina</p>
       <input type="number" placeholder="Cantidad" min="1">
     </div>
     <div class="producto sandia">
-      <img src="img/sandía.png" alt="Jabón con Aroma a Sandía">
+      <img src="sandía.png" alt="Jabón con Aroma a Sandía">
       <a href="info_sandia.html">Imagen e info.</a>
       <p>Jabón con Aroma a Sandía</p>
       <input type="number" placeholder="Cantidad" min="1">
     </div>
   </div>
 
-  <div class="fila-extra">
-    <div class="producto blanco">
-      <img src="img/o%25aroma0%25color.png" alt="Jabón 0% Aroma, 0% Color">
+  <div class="grupo-inferior">
+    <div class="producto jabon0">
+      <img src="o%25aroma0%25color.png" alt="Jabón sin aroma ni color">
       <a href="info_jabon0.html">Imagen e info.</a>
-      <p>Jabón 0% Aroma, 0% Color</p>
+      <p>Jabón neutro sin aroma ni color</p>
       <input type="number" placeholder="Cantidad" min="1">
     </div>
     <div class="producto carbon">
-      <img src="img/carbonactivado.png" alt="Jabón de Carbón Activado">
+      <img src="carbonactivado.png" alt="Jabón de carbón activado">
       <a href="info_carbon.html">Imagen e info.</a>
       <p>Jabón de Carbón Activado</p>
       <input type="number" placeholder="Cantidad" min="1">

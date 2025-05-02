@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pedido Enviado</title>
+  <style>
+    body {
+      font-family: Segoe UI, sans-serif;
+      text-align: center;
+      padding: 2rem;
+    }
+    button {
+      background: #39b7b0;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tu pedido ha sido enviado</h1>
+  <p>¡Muchas gracias por elegirnos!</p>
+  <button onclick="window.location.href='pedidos.html?' + window.location.search.slice(1)">
+    Información sobre el pedido
+  </button>
+</body>
+</html>

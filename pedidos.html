@@ -6,22 +6,45 @@
   <title>Resumen de tu Pedido</title>
   <style>
     body {
-      font-family: Segoe UI, sans-serif;
-      padding: 2rem;
+      font-family: 'Segoe UI', sans-serif;
       max-width: 600px;
-      margin: auto;
+      margin: 2rem auto;
+      padding: 1rem;
       text-align: center;
+    }
+    h1 {
+      margin-bottom: 1rem;
     }
     table {
       width: 100%;
       border-collapse: collapse;
       margin-bottom: 1.5rem;
     }
-    td, th {
+    th, td {
       border: 1px solid #ccc;
       padding: 0.5rem;
     }
-    th { background: #f0f0f0; }
+    th {
+      background: #f0f0f0;
+    }
+    label {
+      display: block;
+      text-align: left;
+      margin: 0.5rem 0 0.2rem;
+    }
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    input:invalid {
+      border-color: red;
+    }
     button {
       background: #39b7b0;
       color: white;
@@ -30,6 +53,11 @@
       font-size: 1rem;
       border-radius: 5px;
       cursor: pointer;
+      margin-top: 1rem;
+    }
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
     }
   </style>
 </head>
@@ -41,11 +69,24 @@
     </thead>
     <tbody></tbody>
   </table>
-  <button id="confirmar">Confirmar pedido</button>
+
+  <!-- Campos de contacto obligatorios -->
+  <form id="formPedido">
+    <label for="nombre">Nombre completo *</label>
+    <input type="text" id="nombre" name="nombre" required>
+
+    <label for="correo">Correo electrónico *</label>
+    <input type="email" id="correo" name="correo" required>
+
+    <label for="direccion">Dirección de envío *</label>
+    <textarea id="direccion" name="direccion" rows="3" required></textarea>
+
+    <button type="submit" id="confirmar">Confirmar pedido</button>
+  </form>
 
   <script>
-    // 1. Leer parámetros de la URL
-    const params = new URLSearchParams(window.location.search);
+    // 1. Construir la tabla de resumen
+    const params = new URLSearchParams(location.search);
     const productos = {
       uva: 'Uva',
       durazno: 'Durazno',
@@ -54,36 +95,52 @@
       neutro: '0% Aroma/Color',
       carbon: 'Carbón Activado'
     };
-    const cuerpo = [];
-
-    // 2. Construir la tabla y el cuerpo del mailto
     const tbody = document.querySelector('#resumen tbody');
+    const pedidoLines = [];
+
     for (let key in productos) {
       const qty = parseInt(params.get(key)) || 0;
       if (qty > 0) {
-        // fila de tabla
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${productos[key]}</td><td>${qty}</td>`;
-        tbody.appendChild(tr);
-        // línea de mailto
-        cuerpo.push(`${productos[key]}: ${qty}`);
+        tbody.insertAdjacentHTML('beforeend',
+          `<tr><td>${productos[key]}</td><td>${qty}</td></tr>`
+        );
+        pedidoLines.push(`${productos[key]}: ${qty}`);
       }
     }
-    if (!tbody.hasChildNodes()) {
-      tbody.innerHTML = '<tr><td colspan="2">No hay productos seleccionados.</td></tr>';
+    if (!pedidoLines.length) {
+      tbody.innerHTML = '<tr><td colspan="2">No seleccionaste ningún jabón.</td></tr>';
     }
 
-    // 3. Confirmar pedido → mailto: y redirección
-    document.getElementById('confirmar').onclick = () => {
-      const asunto = encodeURIComponent('Nuevo pedido SorprendARTE');
-      const body = encodeURIComponent('Resumen de pedido:\n' + cuerpo.join('\n'));
-      // Abrir cliente de correo
-      window.location.href = `mailto:sorprendarte01@gmail.com?subject=${asunto}&body=${body}`;
-      // Tras 1s, ir a gracias.html
-      setTimeout(() => {
-        window.location.href = 'gracias.html?' + window.location.search.slice(1);
-      }, 1000);
-    };
+    // 2. Gestionar el envío
+    document.getElementById('formPedido').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const nombre = document.getElementById('nombre').value.trim();
+      const correo = document.getElementById('correo').value.trim();
+      const direccion = document.getElementById('direccion').value.trim();
+      if (!nombre || !correo || !direccion) {
+        alert('Por favor completa todos los campos obligatorios.');
+        return;
+      }
+
+      // 3. Preparar mailto
+      const subject = encodeURIComponent('Nuevo pedido SorprendARTE de ' + nombre);
+      const bodyLines = [
+        `Nombre: ${nombre}`,
+        `Correo: ${correo}`,
+        `Dirección: ${direccion}`,
+        '',
+        'Resumen de pedido:',
+        ...pedidoLines
+      ];
+      const body = encodeURIComponent(bodyLines.join('\n'));
+      window.location.href = `mailto:sorprendarte01@gmail.com?subject=${subject}&body=${body}`;
+
+      // 4. Mostrar mensaje de confirmación
+      document.body.innerHTML = `
+        <h1>Tu pedido ha sido enviado, ${nombre}!</h1>
+        <p>¡Muchas gracias por elegirnos!</p>
+      `;
+    });
   </script>
 </body>
 </html>

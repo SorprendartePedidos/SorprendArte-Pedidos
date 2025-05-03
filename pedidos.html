@@ -1,107 +1,118 @@
-<!-- pedidos.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Resumen del Pedido</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+  <script>
+    (function() {
+      emailjs.init("eNlwbg1TntZXdHYaM");
+    })();
+  </script>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: url('fondo3.png') no-repeat center center fixed;
-      background-size: cover;
       padding: 2rem;
+      background-color: #fdfdfd;
     }
-    .container {
+    .resumen, form {
       max-width: 600px;
-      background: #fff;
       margin: auto;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
     }
-    h2 {
-      text-align: center;
-      margin-bottom: 1rem;
+    .resumen p {
+      background: #f1f1f1;
+      padding: 10px;
+      border-radius: 6px;
     }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    li {
-      padding: 5px 0;
-    }
-    label {
+    input, button {
       display: block;
-      margin-top: 1rem;
-    }
-    input {
       width: 100%;
-      padding: 8px;
-      margin-top: 0.3rem;
-      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 0.5rem 0;
+      font-size: 1rem;
       border-radius: 4px;
+      border: 1px solid #ccc;
     }
-    .boton-confirmar {
-      margin-top: 2rem;
-      display: block;
-      width: 100%;
+    button {
       background-color: #39b7b0;
       color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 6px;
+      font-weight: bold;
       cursor: pointer;
+    }
+    button:hover {
+      background-color: #2ca59d;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Resumen de tu pedido</h2>
-    <ul id="resumenPedido"></ul>
 
-    <form action="confirmacion.html" method="POST">
-      <label>Nombre completo:
-        <input type="text" name="nombre" required>
-      </label>
-      <label>Correo electrónico:
-        <input type="email" name="correo" required>
-      </label>
-      <label>Estado:
-        <input type="text" name="estado" required>
-      </label>
-      <label>Municipio:
-        <input type="text" name="municipio" required>
-      </label>
-      <label>Colonia:
-        <input type="text" name="colonia" required>
-      </label>
-      <label>Dirección:
-        <input type="text" name="direccion" required>
-      </label>
-      <button type="submit" class="boton-confirmar">Confirmar pedido</button>
-    </form>
+  <div class="resumen">
+    <h2>Resumen de tu pedido</h2>
+    <div id="lista-pedido"></div>
   </div>
 
+  <form id="pedidoForm">
+    <input type="text" name="nombre" id="nombre" placeholder="Tu nombre" required>
+    <input type="email" name="correo" id="correo" placeholder="Tu correo" required>
+    <input type="text" name="estado" placeholder="Estado" required>
+    <input type="text" name="municipio" placeholder="Municipio" required>
+    <input type="text" name="colonia" placeholder="Colonia" required>
+    <input type="text" name="direccion" placeholder="Dirección" required>
+    <input type="hidden" name="pedidoLines" id="pedidoLines">
+    <button type="submit">Confirmar Pedido</button>
+  </form>
+
   <script>
+    // Mostrar el resumen del pedido a partir de parámetros GET
     const params = new URLSearchParams(window.location.search);
-    const productos = [
-      { nombre: "Jabón con Aroma a Uva", clave: "uva" },
-      { nombre: "Jabón con Aroma a Durazno", clave: "durazno" },
-      { nombre: "Jabón con Aroma a Mandarina", clave: "mandarina" },
-      { nombre: "Jabón con Aroma a Sandía", clave: "sandia" },
-      { nombre: "Jabón 0% Aroma, 0% Color", clave: "neutro" },
-      { nombre: "Jabón de Carbón Activado", clave: "carbon" }
-    ];
+    const productos = {
+      uva: "Jabón con Aroma a Uva",
+      durazno: "Jabón con Aroma a Durazno",
+      mandarina: "Jabón con Aroma a Mandarina",
+      sandia: "Jabón con Aroma a Sandía",
+      neutro: "Jabón 0% Aroma, 0% Color",
+      carbon: "Jabón de Carbón Activado"
+    };
 
-    const lista = document.getElementById("resumenPedido");
+    let resumenHTML = "";
+    let pedidoLines = [];
 
-    productos.forEach(producto => {
-      const cantidad = params.get(producto.clave);
+    for (const [key, nombre] of Object.entries(productos)) {
+      const cantidad = params.get(key);
       if (cantidad && parseInt(cantidad) > 0) {
-        const li = document.createElement("li");
-        li.textContent = `${producto.nombre}: ${cantidad}`;
-        lista.appendChild(li);
+        const line = `- ${nombre}: ${cantidad}`;
+        resumenHTML += `<p>${line}</p>`;
+        pedidoLines.push(line);
       }
+    }
+
+    document.getElementById("lista-pedido").innerHTML = resumenHTML;
+    document.getElementById("pedidoLines").value = pedidoLines.join("\\n");
+
+    // Enviar pedido por EmailJS
+    document.getElementById('pedidoForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const nombre = document.getElementById('nombre').value;
+      const templateParams = {
+        nombre,
+        correo: document.getElementById('correo').value,
+        estado: document.querySelector('input[name="estado"]').value,
+        municipio: document.querySelector('input[name="municipio"]').value,
+        colonia: document.querySelector('input[name="colonia"]').value,
+        direccion: document.querySelector('input[name="direccion"]').value,
+        pedidoLines: pedidoLines
+      };
+
+      emailjs.send('service_gapodll', 'template_kmt7yxo', templateParams)
+        .then(() => {
+          window.location.href = `gracias.html?nombre=${encodeURIComponent(nombre)}`;
+        }, (error) => {
+          alert('Hubo un error al enviar el pedido. Intenta de nuevo.');
+          console.error('Error:', error);
+        });
     });
   </script>
 </body>

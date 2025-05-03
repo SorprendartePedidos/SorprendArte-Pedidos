@@ -1,119 +1,33 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Confirmar Pedido</title>
-  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 2rem;
-      background-color: #f9f9f9;
-    }
-    h2 {
-      color: #333;
-    }
-    form {
-      max-width: 500px;
-      margin: 0 auto;
-      background: white;
-      padding: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 8px;
-      margin-bottom: 16px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    button {
-      background-color: #39b7b0;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    button:hover {
-      background-color: #2ca59d;
-    }
-    .resumen {
-      background-color: #f0f0f0;
-      padding: 10px;
-      margin-top: 1rem;
-      border-radius: 4px;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css"><!-- si tienes CSS separado -->
 </head>
 <body>
 
-  <h2>Resumen de tu pedido</h2>
+  <h2 style="text-align:center; color:#39b7b0;">Resumen de tu pedido</h2>
 
-  <div id="resumenPedido" class="resumen"></div>
+  <div id="resumenPedido" class="resumen" style="background:#f0f0f0; padding:1rem; margin:1rem auto; max-width:500px; border-radius:5px;"></div>
 
-  <form id="pedidoForm">
-    <input type="text" name="nombre" placeholder="Nombre completo" required>
-    <input type="email" name="email" placeholder="Correo electrónico" required>
-    <input type="text" name="estado" placeholder="Estado" required>
-    <input type="text" name="municipio" placeholder="Municipio" required>
-    <input type="text" name="colonia" placeholder="Colonia" required>
-    <input type="text" name="direccion" placeholder="Calle y número" required>
+  <form id="pedido-form" style="max-width:500px; margin:auto; background:white; padding:1.5rem; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+    <input type="text" name="nombre" placeholder="Nombre completo" required style="width:100%; padding:0.5rem; margin-bottom:1rem;"/>
+    <input type="email" name="email" placeholder="Correo electrónico" required style="width:100%; padding:0.5rem; margin-bottom:1rem;"/>
+    <input type="text" name="estado" placeholder="Estado" required style="width:100%; padding:0.5rem; margin-bottom:1rem;"/>
+    <input type="text" name="municipio" placeholder="Municipio" required style="width:100%; padding:0.5rem; margin-bottom:1rem;"/>
+    <input type="text" name="colonia" placeholder="Colonia" required style="width:100%; padding:0.5rem; margin-bottom:1rem;"/>
+    <textarea name="direccion" placeholder="Dirección completa" required style="width:100%; padding:0.5rem; margin-bottom:1rem;"></textarea>
 
-    <button type="submit">Confirmar pedido</button>
+    <button type="submit" style="width:100%; padding:0.75rem; background:#39b7b0; color:white; border:none; border-radius:5px; font-size:1rem; cursor:pointer;">
+      Confirmar pedido
+    </button>
   </form>
 
+  <!-- EmailJS SDK -->
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-<script>
-  emailjs.init('eNlwbg1TntZXdHYaM');
-
-  document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('pedido-form');
-
-    form.addEventListener('submit', function (event) {
-      event.preventDefault();
-
-      const pedidoFinal = [];
-      const jabones = ['uva', 'durazno', 'mandarina', 'sandia', 'neutro', 'carbon'];
-      const nombres = {
-        uva: 'Jabón con Aroma a Uva',
-        durazno: 'Jabón con Aroma a Durazno',
-        mandarina: 'Jabón con Aroma a Mandarina',
-        sandia: 'Jabón con Aroma a Sandía',
-        neutro: 'Jabón 0% Aroma, 0% Color',
-        carbon: 'Jabón de Carbón Activado'
-      };
-
-      jabones.forEach(jabon => {
-        const cantidad = form[jabon].value;
-        if (cantidad && parseInt(cantidad) > 0) {
-          pedidoFinal.push(`${cantidad} x ${nombres[jabon]}`);
-        }
-      });
-
-      const datos = {
-        nombre: form.nombre.value,
-        correo: form.email.value,
-        estado: form.estado.value,
-        municipio: form.municipio.value,
-        colonia: form.colonia.value,
-        direccion: form.direccion.value,
-        pedidoLines: pedidoFinal
-      };
-
-      emailjs.send('service_gapodll', 'template_kmt7yxo', datos, 'eNlwbg1TntZXdHYaM')
-        .then(function () {
-          window.location.href = 'resumen.html?nombre=' + encodeURIComponent(datos.nombre);
-        }, function (error) {
-          alert('Hubo un error al enviar el pedido. Intenta de nuevo.');
-          console.error('EmailJS error:', error);
-        });
-    });
-  });
-</script>
-
+  <!-- Tu código JavaScript -->
+  <script src="script.js"></script>
 </body>
 </html>

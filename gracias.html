@@ -1,32 +1,55 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pedido Enviado</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>¡Gracias por tu pedido!</title>
   <style>
     body {
-      font-family: Segoe UI, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f8ff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
       text-align: center;
-      padding: 2rem;
     }
-    button {
-      background: #39b7b0;
+    h1 {
+      color: #39b7b0;
+    }
+    p {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+    }
+    a {
+      margin-top: 2rem;
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #39b7b0;
       color: white;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 1.5rem;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+    a:hover {
+      background-color: #2ca59d;
     }
   </style>
 </head>
 <body>
-  <h1>Tu pedido ha sido enviado</h1>
-  <p>¡Muchas gracias por elegirnos!</p>
-  <button onclick="window.location.href='pedidos.html?' + window.location.search.slice(1)">
-    Información sobre el pedido
-  </button>
+  <h1>¡Gracias por tu pedido, <span id="nombre-cliente">cliente</span>!</h1>
+  <p>Tu pedido ha sido enviado. ¡Muchas gracias por elegirnos!</p>
+  <a id="infoLink" href="#">Información sobre el pedido</a>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const nombre = params.get('nombre') || 'cliente';
+    document.getElementById('nombre-cliente').textContent = nombre;
+
+    // Redireccionar a resumen de pedido (opcional, puedes cambiar la URL)
+    const link = document.getElementById('infoLink');
+    link.href = `resumen.html?nombre=${encodeURIComponent(nombre)}`;
+  </script>
 </body>
 </html>

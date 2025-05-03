@@ -7,31 +7,47 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #fdf5f5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      text-align: center;
-    }
-    .mensaje {
-      background: white;
+      background-color: #f0f8ff;
       padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      color: #333;
     }
-    h2 {
-      color: #39b7b0;
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .resumen {
+      background: #ffffff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin: 0 auto 2rem auto;
+    }
+    .resumen h2 {
+      margin-top: 0;
+    }
+    .campo {
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
     }
     button {
-      margin-top: 1.5rem;
-      padding: 10px 20px;
-      font-size: 16px;
+      display: block;
+      margin: 2rem auto 0 auto;
+      padding: 0.8rem 1.5rem;
       background-color: #39b7b0;
       color: white;
       border: 2px solid #c2185b;
       border-radius: 6px;
+      font-size: 16px;
       cursor: pointer;
     }
     button:hover {
@@ -40,20 +56,70 @@
   </style>
 </head>
 <body>
-  <div class="mensaje">
-    <h2 id="mensaje">Tu pedido ha sido enviado</h2>
-    <p>¡Muchas gracias por elegirnos!</p>
-    <button onclick="verInfo()">Información sobre el pedido</button>
+
+  <h1>Confirmación de tu Pedido</h1>
+
+  <div class="resumen" id="resumenPedido">
+    <h2>Resumen del pedido:</h2>
+    <ul id="listaPedido"></ul>
   </div>
 
-  <script>
-    const params = new URLSearchParams(document.referrer.split('?')[1]);
-    const nombre = params.get("nombre") || "Cliente";
-    document.getElementById("mensaje").textContent = `Tu pedido ha sido enviado, ${nombre}`;
+  <form id="pedidoForm">
+    <div class="resumen">
+      <div class="campo">
+        <label for="nombre">Nombre completo *</label>
+        <input type="text" id="nombre" name="nombre" required />
+      </div>
+      <div class="campo">
+        <label for="correo">Correo electrónico *</label>
+        <input type="email" id="correo" name="correo" required />
+      </div>
+      <div class="campo">
+        <label for="estado">Estado *</label>
+        <input type="text" id="estado" name="estado" required />
+      </div>
+      <div class="campo">
+        <label for="municipio">Municipio *</label>
+        <input type="text" id="municipio" name="municipio" required />
+      </div>
+      <div class="campo">
+        <label for="colonia">Colonia *</label>
+        <input type="text" id="colonia" name="colonia" required />
+      </div>
+      <div class="campo">
+        <label for="direccion">Dirección completa *</label>
+        <input type="text" id="direccion" name="direccion" required />
+      </div>
+      <button type="submit">Confirmar pedido</button>
+    </div>
+  </form>
 
-    function verInfo() {
-      window.location.href = "resumen.html?" + document.referrer.split('?')[1];
+  <!-- EmailJS -->
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("eNlwbg1TntZXdHYaM");
+    })();
+  </script>
+
+  <!-- Script principal -->
+  <script src="script.js"></script>
+
+  <!-- Mostrar el pedido almacenado -->
+  <script>
+    const listaPedido = document.getElementById("listaPedido");
+    const pedido = JSON.parse(sessionStorage.getItem("pedido")) || [];
+
+    if (pedido.length > 0) {
+      pedido.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        listaPedido.appendChild(li);
+      });
+    } else {
+      listaPedido.innerHTML = "<li>No se encontraron productos.</li>";
     }
   </script>
+
 </body>
 </html>

@@ -6,114 +6,65 @@
   <title>Resumen del Pedido</title>
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
   <script>
-    (function() {
+    (function(){
       emailjs.init("eNlwbg1TntZXdHYaM");
     })();
   </script>
+  <script src="script.js" defer></script>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       padding: 2rem;
-      background-color: #fdfdfd;
+      background-color: #f5f5f5;
     }
-    .resumen, form {
-      max-width: 600px;
-      margin: auto;
-      margin-bottom: 2rem;
+    h1, h2 {
+      text-align: center;
     }
-    .resumen p {
-      background: #f1f1f1;
-      padding: 10px;
-      border-radius: 6px;
+    .resumen, .formulario {
+      max-width: 500px;
+      margin: 1rem auto;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    input, button {
-      display: block;
+    .formulario input {
       width: 100%;
+      margin-bottom: 1rem;
       padding: 10px;
-      margin: 0.5rem 0;
-      font-size: 1rem;
-      border-radius: 4px;
       border: 1px solid #ccc;
+      border-radius: 4px;
     }
-    button {
+    .formulario button {
+      width: 100%;
+      padding: 12px;
       background-color: #39b7b0;
       color: white;
-      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
       cursor: pointer;
     }
-    button:hover {
+    .formulario button:hover {
       background-color: #2ca59d;
     }
   </style>
 </head>
 <body>
-
+  <h1>Resumen de tu Pedido</h1>
   <div class="resumen">
-    <h2>Resumen de tu pedido</h2>
-    <div id="lista-pedido"></div>
+    <h2>🧼 Productos:</h2>
+    <div id="pedidoResumen"></div>
   </div>
-
-  <form id="pedidoForm">
-    <input type="text" name="nombre" id="nombre" placeholder="Tu nombre" required>
-    <input type="email" name="correo" id="correo" placeholder="Tu correo" required>
-    <input type="text" name="estado" placeholder="Estado" required>
-    <input type="text" name="municipio" placeholder="Municipio" required>
-    <input type="text" name="colonia" placeholder="Colonia" required>
-    <input type="text" name="direccion" placeholder="Dirección" required>
-    <input type="hidden" name="pedidoLines" id="pedidoLines">
-    <button type="submit">Confirmar Pedido</button>
+  <form class="formulario" onsubmit="return sendEmail()">
+    <h2>📋 Tus datos</h2>
+    <input type="text" id="nombre" placeholder="Nombre completo" required />
+    <input type="email" id="correo" placeholder="Correo electrónico" required />
+    <input type="text" id="estado" placeholder="Estado" required />
+    <input type="text" id="municipio" placeholder="Municipio" required />
+    <input type="text" id="colonia" placeholder="Colonia" required />
+    <input type="text" id="direccion" placeholder="Dirección completa" required />
+    <button type="submit">Confirmar pedido</button>
   </form>
-
-  <script>
-    // Mostrar el resumen del pedido a partir de parámetros GET
-    const params = new URLSearchParams(window.location.search);
-    const productos = {
-      uva: "Jabón con Aroma a Uva",
-      durazno: "Jabón con Aroma a Durazno",
-      mandarina: "Jabón con Aroma a Mandarina",
-      sandia: "Jabón con Aroma a Sandía",
-      neutro: "Jabón 0% Aroma, 0% Color",
-      carbon: "Jabón de Carbón Activado"
-    };
-
-    let resumenHTML = "";
-    let pedidoLines = [];
-
-    for (const [key, nombre] of Object.entries(productos)) {
-      const cantidad = params.get(key);
-      if (cantidad && parseInt(cantidad) > 0) {
-        const line = `- ${nombre}: ${cantidad}`;
-        resumenHTML += `<p>${line}</p>`;
-        pedidoLines.push(line);
-      }
-    }
-
-    document.getElementById("lista-pedido").innerHTML = resumenHTML;
-    document.getElementById("pedidoLines").value = pedidoLines.join("\\n");
-
-    // Enviar pedido por EmailJS
-    document.getElementById('pedidoForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const nombre = document.getElementById('nombre').value;
-      const templateParams = {
-        nombre,
-        correo: document.getElementById('correo').value,
-        estado: document.querySelector('input[name="estado"]').value,
-        municipio: document.querySelector('input[name="municipio"]').value,
-        colonia: document.querySelector('input[name="colonia"]').value,
-        direccion: document.querySelector('input[name="direccion"]').value,
-        pedidoLines: pedidoLines
-      };
-
-      emailjs.send('service_gapodll', 'template_kmt7yxo', templateParams)
-        .then(() => {
-          window.location.href = `gracias.html?nombre=${encodeURIComponent(nombre)}`;
-        }, (error) => {
-          alert('Hubo un error al enviar el pedido. Intenta de nuevo.');
-          console.error('Error:', error);
-        });
-    });
-  </script>
 </body>
 </html>

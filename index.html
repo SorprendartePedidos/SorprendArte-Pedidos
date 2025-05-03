@@ -52,6 +52,22 @@
       margin-bottom: 0.5rem;
     }
 
+    .producto a.info {
+      display: inline-block;
+      margin: 0.5rem auto;
+      padding: 6px 12px;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+    .uva    a.info { background: blue; }
+    .durazno a.info { background: gold; color:black; }
+    .mandarina a.info { background: red; }
+    .sandia a.info { background: green; }
+    .blanco a.info { background: white; color:black; border:2px solid #ccc; }
+    .carbon a.info { background: black; }
+
     .producto p {
       margin: 0.5rem 0;
       font-weight: bold;
@@ -62,6 +78,7 @@
       padding: 4px;
       border-radius: 4px;
       border: 1px solid #ccc;
+      margin-top: 0.5rem;
     }
 
     .boton-pedido {
@@ -92,21 +109,25 @@
     <div class="container">
       <div class="producto uva">
         <img src="uva.png" alt="Uva">
+        <a href="info_uva.html" class="info">Imagen e info.</a>
         <p>Jabón con Aroma a Uva</p>
         <input type="number" name="uva" placeholder="Cantidad" min="0">
       </div>
       <div class="producto durazno">
         <img src="Durazno.png" alt="Durazno">
+        <a href="info_durazno.html" class="info">Imagen e info.</a>
         <p>Jabón con Aroma a Durazno</p>
         <input type="number" name="durazno" placeholder="Cantidad" min="0">
       </div>
       <div class="producto mandarina">
         <img src="mandarina.png" alt="Mandarina">
+        <a href="info_mandarina.html" class="info">Imagen e info.</a>
         <p>Jabón con Aroma a Mandarina</p>
         <input type="number" name="mandarina" placeholder="Cantidad" min="0">
       </div>
       <div class="producto sandia">
         <img src="sandía.png" alt="Sandía">
+        <a href="info_sandia.html" class="info">Imagen e info.</a>
         <p>Jabón con Aroma a Sandía</p>
         <input type="number" name="sandia" placeholder="Cantidad" min="0">
       </div>
@@ -116,11 +137,13 @@
     <div class="container" style="justify-content: center;">
       <div class="producto blanco">
         <img src="o%25aroma0%25color.png" alt="0%">
+        <a href="info_jabon0.html" class="info">Imagen e info.</a>
         <p>Jabón 0% Aroma, 0% Color</p>
         <input type="number" name="neutro" placeholder="Cantidad" min="0">
       </div>
       <div class="producto carbon">
         <img src="carbonactivado.png" alt="Carbón">
+        <a href="info_carbon.html" class="info">Imagen e info.</a>
         <p>Jabón de Carbón Activado</p>
         <input type="number" name="carbon" placeholder="Cantidad" min="0">
       </div>

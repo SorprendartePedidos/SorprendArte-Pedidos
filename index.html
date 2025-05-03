@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -13,19 +12,24 @@
       margin: 0;
       padding: 2rem;
     }
+
     header {
       text-align: center;
       margin-bottom: 2rem;
     }
+
     header img {
       max-width: 300px;
     }
+
     .container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 1rem;
+      margin-bottom: 2rem;
     }
+
     .producto {
       width: 200px;
       text-align: center;
@@ -34,25 +38,32 @@
       padding: 10px;
       background-color: #ffffff;
     }
-    .uva    { background: #e0f0ff; }
-    .durazno{ background: #fff9db; }
-    .mandarina{ background: #ffe6e6; }
-    .sandia { background: #e2f8e6; }
-    .blanco { background: #f2f2f2; }
-    .carbon { background: #f7f7f7; }
+
+    .uva       { background-color: #e0f0ff; }
+    .durazno   { background-color: #fff9db; }
+    .mandarina { background-color: #ffe6e6; }
+    .sandia    { background-color: #e2f8e6; }
+    .blanco    { background-color: #f2f2f2; }
+    .carbon    { background-color: #f7f7f7; }
 
     .producto img {
       width: 100%;
       border-radius: 8px;
       margin-bottom: 0.5rem;
     }
+
+    .producto p {
+      margin: 0.5rem 0;
+      font-weight: bold;
+    }
+
     .producto input {
       width: 80%;
       padding: 4px;
-      margin-top: 0.5rem;
       border-radius: 4px;
       border: 1px solid #ccc;
     }
+
     .boton-pedido {
       display: block;
       margin: 2rem auto;
@@ -64,46 +75,57 @@
       font-size: 16px;
       cursor: pointer;
     }
+
+    .boton-pedido:hover {
+      background-color: #2ca59d;
+    }
   </style>
 </head>
+
 <body>
   <header>
     <img src="logo.png" alt="Logo SorprendARTE">
   </header>
 
   <form action="pedidos.html" method="GET">
+    <!-- Primera fila -->
     <div class="container">
       <div class="producto uva">
         <img src="uva.png" alt="Uva">
         <p>Jabón con Aroma a Uva</p>
-        <input type="number" name="uva" min="0" placeholder="Cantidad">
+        <input type="number" name="uva" placeholder="Cantidad" min="0">
       </div>
       <div class="producto durazno">
         <img src="Durazno.png" alt="Durazno">
         <p>Jabón con Aroma a Durazno</p>
-        <input type="number" name="durazno" min="0" placeholder="Cantidad">
+        <input type="number" name="durazno" placeholder="Cantidad" min="0">
       </div>
       <div class="producto mandarina">
         <img src="mandarina.png" alt="Mandarina">
         <p>Jabón con Aroma a Mandarina</p>
-        <input type="number" name="mandarina" min="0" placeholder="Cantidad">
+        <input type="number" name="mandarina" placeholder="Cantidad" min="0">
       </div>
       <div class="producto sandia">
         <img src="sandía.png" alt="Sandía">
         <p>Jabón con Aroma a Sandía</p>
-        <input type="number" name="sandia" min="0" placeholder="Cantidad">
+        <input type="number" name="sandia" placeholder="Cantidad" min="0">
       </div>
+    </div>
+
+    <!-- Segunda fila centrada -->
+    <div class="container" style="justify-content: center;">
       <div class="producto blanco">
         <img src="o%25aroma0%25color.png" alt="0%">
         <p>Jabón 0% Aroma, 0% Color</p>
-        <input type="number" name="neutro" min="0" placeholder="Cantidad">
+        <input type="number" name="neutro" placeholder="Cantidad" min="0">
       </div>
       <div class="producto carbon">
         <img src="carbonactivado.png" alt="Carbón">
         <p>Jabón de Carbón Activado</p>
-        <input type="number" name="carbon" min="0" placeholder="Cantidad">
+        <input type="number" name="carbon" placeholder="Cantidad" min="0">
       </div>
     </div>
+
     <button type="submit" class="boton-pedido">Hacer pedido</button>
   </form>
 </body>

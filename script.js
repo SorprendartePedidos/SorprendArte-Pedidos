@@ -1,54 +1,55 @@
-function sendEmail() {
-  event.preventDefault();
+// Inicializa EmailJS con tu clave pública
+emailjs.init('eNlwbg1TntZXdHYaM');
 
-  const nombre = document.getElementById('nombre').value;
-  const correo = document.getElementById('correo').value;
-  const estado = document.getElementById('estado').value;
-  const municipio = document.getElementById('municipio').value;
-  const colonia = document.getElementById('colonia').value;
-  const direccion = document.getElementById('direccion').value;
-  const pedido = document.getElementById('pedidoResumen').innerText.trim().split('\n');
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('formulario-pedido');
 
-  emailjs.send("service_gapodll", "template_kmt7yxo", {
-    nombre,
-    correo,
-    estado,
-    municipio,
-    colonia,
-    direccion,
-    pedidoLines: pedido
-  }, "eNlwbg1TntZXdHYaM")
-  .then(function(response) {
-    console.log('Correo enviado con éxito', response.status, response.text);
-    window.location.href = `gracias.html?nombre=${encodeURIComponent(nombre)}`;
-  }, function(error) {
-    console.log('Error al enviar el correo:', error);
-    alert("Hubo un error al enviar el pedido. Intenta nuevamente.");
-  });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
 
-  return false;
-}
+    // Obtener los valores de los campos del formulario
+    const nombre = document.getElementById('nombre').value.trim();
+    const correo = document.getElementById('correo').value.trim();
+    const estado = document.getElementById('estado').value.trim();
+    const municipio = document.getElementById('municipio').value.trim();
+    const colonia = document.getElementById('colonia').value.trim();
+    const direccion = document.getElementById('direccion').value.trim();
 
-window.onload = function () {
-  const urlParams = new URLSearchParams(window.location.search);
-  const pedidoResumen = document.getElementById('pedidoResumen');
-
-  const items = ['uva', 'durazno', 'mandarina', 'sandia', 'neutro', 'carbon'];
-  const nombres = {
-    uva: "Jabón con aroma a Uva",
-    durazno: "Jabón con aroma a Durazno",
-    mandarina: "Jabón con aroma a Mandarina",
-    sandia: "Jabón con aroma a Sandía",
-    neutro: "Jabón 0% Aroma y Color",
-    carbon: "Jabón de Carbón Activado"
-  };
-
-  items.forEach(item => {
-    const cantidad = parseInt(urlParams.get(item));
-    if (!isNaN(cantidad) && cantidad > 0) {
-      const p = document.createElement('p');
-      p.textContent = `– ${cantidad} ${nombres[item]}`;
-      pedidoResumen.appendChild(p);
+    // Validar campos obligatorios
+    if (!nombre || !correo || !estado || !municipio || !colonia || !direccion) {
+      alert('Por favor llena todos los campos.');
+      return;
     }
+
+    // Obtener los productos que el cliente pidió
+    const pedidoItems = Array.from(document.querySelectorAll('.pedido-item')).map(item => item.textContent.trim());
+
+    // Si no hay pedido, no continuamos
+    if (pedidoItems.length === 0) {
+      alert('No se ha seleccionado ningún producto.');
+      return;
+    }
+
+    // Parametros para el template de EmailJS
+    const templateParams = {
+      nombre,
+      correo,
+      estado,
+      municipio,
+      colonia,
+      direccion,
+      pedidoLines: pedidoItems
+    };
+
+    // Enviar el correo
+    emailjs.send('service_gapodll', 'template_kmt7yxo', templateParams)
+      .then(function (response) {
+        console.log('Correo enviado:', response.status, response.text);
+        // Redirigir a página de agradecimiento con el nombre
+        window.location.href = `gracias.html?nombre=${encodeURIComponent(nombre)}`;
+      }, function (error) {
+        console.error('Error al enviar:', error);
+        alert('Hubo un error al enviar el pedido. Por favor, inténtalo más tarde.');
+      });
   });
-};
+});

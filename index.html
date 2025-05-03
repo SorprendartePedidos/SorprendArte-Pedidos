@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -31,28 +32,19 @@
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       padding: 10px;
-      background-color: #ffffff; /* blanco pastel por defecto */
+      background-color: #ffffff;
     }
-    /* Pasteles y colores de botón */
-    .uva    { background: #e0f0ff; }    .uva    a { background: blue; }
-    .durazno{ background: #fff9db; }    .durazno a { background: gold; color:black; }
-    .mandarina{background: #ffe6e6;}    .mandarina a{ background:red; }
-    .sandia { background: #e2f8e6; }    .sandia a { background:green; }
-    .blanco { background: #f2f2f2; }    .blanco a  { background:black; color:black; border:2px solid #ccc; }
-    .carbon { background: #f7f7f7; }    .carbon a  { background:black; }
+    .uva    { background: #e0f0ff; }
+    .durazno{ background: #fff9db; }
+    .mandarina{ background: #ffe6e6; }
+    .sandia { background: #e2f8e6; }
+    .blanco { background: #f2f2f2; }
+    .carbon { background: #f7f7f7; }
 
     .producto img {
       width: 100%;
       border-radius: 8px;
       margin-bottom: 0.5rem;
-    }
-    .producto a {
-      display: block;
-      margin: 0.5rem auto;
-      padding: 8px;
-      color: white;
-      text-decoration: none;
-      border-radius: 4px;
     }
     .producto input {
       width: 80%;
@@ -72,68 +64,46 @@
       font-size: 16px;
       cursor: pointer;
     }
-    .boton-pedido:hover {
-      background-color: #2ca59d;
-    }
-
-    /* Para centrar los productos de 0% y Carbón */
-    .producto.blanco, .producto.carbon {
-      width: 200px;
-      margin-top: 20px;
-    }
   </style>
 </head>
-
 <body>
   <header>
     <img src="logo.png" alt="Logo SorprendARTE">
   </header>
 
-  <!-- El formulario envía al usuario a pedidos.html con las cantidades -->
   <form action="pedidos.html" method="GET">
     <div class="container">
       <div class="producto uva">
-        <img src="uva.png" alt="Jabón con Aroma a Uva">
-        <a href="info_uva.html">Imagen e info.</a>
+        <img src="uva.png" alt="Uva">
         <p>Jabón con Aroma a Uva</p>
-        <input type="number" name="uva" placeholder="Cantidad" min="0" value="0">
+        <input type="number" name="uva" min="0" placeholder="Cantidad">
       </div>
       <div class="producto durazno">
-        <img src="Durazno.png" alt="Jabón con Aroma a Durazno">
-        <a href="info_durazno.html">Imagen e info.</a>
+        <img src="Durazno.png" alt="Durazno">
         <p>Jabón con Aroma a Durazno</p>
-        <input type="number" name="durazno" placeholder="Cantidad" min="0" value="0">
+        <input type="number" name="durazno" min="0" placeholder="Cantidad">
       </div>
       <div class="producto mandarina">
-        <img src="mandarina.png" alt="Jabón con Aroma a Mandarina">
-        <a href="info_mandarina.html">Imagen e info.</a>
+        <img src="mandarina.png" alt="Mandarina">
         <p>Jabón con Aroma a Mandarina</p>
-        <input type="number" name="mandarina" placeholder="Cantidad" min="0" value="0">
+        <input type="number" name="mandarina" min="0" placeholder="Cantidad">
       </div>
       <div class="producto sandia">
-        <img src="sandía.png" alt="Jabón con Aroma a Sandía">
-        <a href="info_sandia.html">Imagen e info.</a>
+        <img src="sandía.png" alt="Sandía">
         <p>Jabón con Aroma a Sandía</p>
-        <input type="number" name="sandia" placeholder="Cantidad" min="0" value="0">
+        <input type="number" name="sandia" min="0" placeholder="Cantidad">
       </div>
-    </div>
-
-    <!-- Los productos 0% y Carbón están centrados debajo de los otros -->
-    <div class="container">
       <div class="producto blanco">
-        <img src="o%25aroma0%25color.png" alt="Jabón Neutro 0%">
-        <a href="info_jabon0.html">Imagen e info.</a>
+        <img src="o%25aroma0%25color.png" alt="0%">
         <p>Jabón 0% Aroma, 0% Color</p>
-        <input type="number" name="neutro" placeholder="Cantidad" min="0" value="0">
+        <input type="number" name="neutro" min="0" placeholder="Cantidad">
       </div>
       <div class="producto carbon">
-        <img src="carbonactivado.png" alt="Jabón de Carbón Activado">
-        <a href="info_carbon.html">Imagen e info.</a>
+        <img src="carbonactivado.png" alt="Carbón">
         <p>Jabón de Carbón Activado</p>
-        <input type="number" name="carbon" placeholder="Cantidad" min="0" value="0">
+        <input type="number" name="carbon" min="0" placeholder="Cantidad">
       </div>
     </div>
-
     <button type="submit" class="boton-pedido">Hacer pedido</button>
   </form>
 </body>

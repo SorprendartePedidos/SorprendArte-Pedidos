@@ -3,31 +3,150 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Confirmar Pedido</title>
-  <link rel="stylesheet" href="styles.css"><!-- si tienes CSS separado -->
+  <title>SorprendARTE - Tienda de Jabones Personalizados</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url('fondo3.png') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 2rem;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    header img {
+      max-width: 300px;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .producto {
+      width: 200px;
+      text-align: center;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 10px;
+      background-color: #ffffff; /* blanco pastel por defecto */
+    }
+    .uva    { background: #e0f0ff; }    .uva    a { background: blue; }
+    .durazno{ background: #fff9db; }    .durazno a { background: gold; color:black; }
+    .mandarina{background: #ffe6e6;}    .mandarina a{ background:red; }
+    .sandia { background: #e2f8e6; }    .sandia a { background:green; }
+    .blanco { background: #f2f2f2; }    .blanco a  { background:white; color:black; border:2px solid #ccc; }
+    .carbon { background: #f7f7f7; }    .carbon a  { background:black; }
+
+    .producto img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+    }
+    .producto a {
+      display: block;
+      margin: 0.5rem auto;
+      padding: 8px;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+    .producto input {
+      width: 80%;
+      padding: 4px;
+      margin-top: 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    .boton-pedido {
+      display: block;
+      margin: 2rem auto;
+      background-color: #39b7b0;
+      color: white;
+      border: 3px solid #c2185b;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .boton-pedido:hover {
+      background-color: #2ca59d;
+    }
+  </style>
 </head>
+
 <body>
+  <header>
+    <img src="logo.png" alt="Logo SorprendARTE">
+  </header>
 
-  <h2 style="text-align:center; color:#39b7b0;">Resumen de tu pedido</h2>
+  <!-- El formulario envía al usuario a confirmacion.html con las cantidades -->
+  <form id="pedido-form">
+    <div class="container">
+      <div class="producto uva">
+        <img src="uva.png" alt="Jabón con Aroma a Uva">
+        <a href="info_uva.html">Imagen e info.</a>
+        <p>Jabón con Aroma a Uva</p>
+        <input type="number" name="uva" placeholder="Cantidad" min="0" value="0">
+      </div>
+      <div class="producto durazno">
+        <img src="Durazno.png" alt="Jabón con Aroma a Durazno">
+        <a href="info_durazno.html">Imagen e info.</a>
+        <p>Jabón con Aroma a Durazno</p>
+        <input type="number" name="durazno" placeholder="Cantidad" min="0" value="0">
+      </div>
+      <div class="producto mandarina">
+        <img src="mandarina.png" alt="Jabón con Aroma a Mandarina">
+        <a href="info_mandarina.html">Imagen e info.</a>
+        <p>Jabón con Aroma a Mandarina</p>
+        <input type="number" name="mandarina" placeholder="Cantidad" min="0" value="0">
+      </div>
+      <div class="producto sandia">
+        <img src="sandía.png" alt="Jabón con Aroma a Sandía">
+        <a href="info_sandia.html">Imagen e info.</a>
+        <p>Jabón con Aroma a Sandía</p>
+        <input type="number" name="sandia" placeholder="Cantidad" min="0" value="0">
+      </div>
+      <div class="producto blanco">
+        <img src="o%25aroma0%25color.png" alt="Jabón Neutro 0%">
+        <a href="info_jabon0.html">Imagen e info.</a>
+        <p>Jabón 0% Aroma, 0% Color</p>
+        <input type="number" name="neutro" placeholder="Cantidad" min="0" value="0">
+      </div>
+      <div class="producto carbon">
+        <img src="carbonactivado.png" alt="Jabón de Carbón Activado">
+        <a href="info_carbon.html">Imagen e info.</a>
+        <p>Jabón de Carbón Activado</p>
+        <input type="number" name="carbon" placeholder="Cantidad" min="0" value="0">
+      </div>
+    </div>
 
-  <div id="resumenPedido" class="resumen" style="background:#f0f0f0; padding:1rem; margin:1rem auto; max-width:500px; border-radius:5px;"></div>
-
-  <form id="pedido-form" style="max-width:500px; margin:auto; background:white; padding:1.5rem; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-    <input type="text" name="nombre" placeholder="Nombre completo" required style="width:100%; padding:0.5rem; margin-bottom:1rem;"/>
-    <input type="email" name="email" placeholder="Correo electrónico" required style="width:100%; padding:0.5rem; margin-bottom:1rem;"/>
-    <input type="text" name="estado" placeholder="Estado" required style="width:100%; padding:0.5rem; margin-bottom:1rem;"/>
-    <input type="text" name="municipio" placeholder="Municipio" required style="width:100%; padding:0.5rem; margin-bottom:1rem;"/>
-    <input type="text" name="colonia" placeholder="Colonia" required style="width:100%; padding:0.5rem; margin-bottom:1rem;"/>
-    <textarea name="direccion" placeholder="Dirección completa" required style="width:100%; padding:0.5rem; margin-bottom:1rem;"></textarea>
-
-    <button type="submit" style="width:100%; padding:0.75rem; background:#39b7b0; color:white; border:none; border-radius:5px; font-size:1rem; cursor:pointer;">
-      Confirmar pedido
-    </button>
+    <button type="submit" class="boton-pedido">Confirmar Pedido</button>
   </form>
 
-  <!-- EmailJS SDK -->
-  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-  <!-- Tu código JavaScript -->
-  <script src="script.js"></script>
+  <script>
+    document.getElementById('pedido-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // Recopilando datos del formulario
+      const datos = new FormData(this);
+      const resumen = {};
+
+      // Almacenando las cantidades de cada jabón
+      datos.forEach((value, key) => {
+        if (value > 0) {
+          resumen[key] = value;
+        }
+      });
+
+      // Guardar la información en el almacenamiento local para pasarla a confirmacion.html
+      localStorage.setItem('resumenPedido', JSON.stringify(resumen));
+
+      // Redirigir a la página de confirmación
+      window.location.href = "confirmacion.html";
+    });
+  </script>
 </body>
 </html>

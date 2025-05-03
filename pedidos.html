@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Resumen del Pedido</title>
-  <link rel="stylesheet" href="estilos.css" />
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #f5f5f5;
       padding: 2rem;
+      margin: 0;
     }
     .container {
       max-width: 600px;
@@ -19,13 +19,14 @@
       padding: 2rem;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    h2 {
+    h1, h2 {
       text-align: center;
-      margin-bottom: 1rem;
+      margin: 0 0 1rem;
     }
     ul {
       list-style: none;
       padding: 0;
+      margin-bottom: 1.5rem;
     }
     .pedido-item {
       background: #eef;
@@ -33,27 +34,34 @@
       padding: 0.5rem;
       border-radius: 6px;
     }
-    label {
+    form label {
       display: block;
       margin-top: 1rem;
+      font-weight: bold;
     }
-    input {
+    form input {
       width: 100%;
       padding: 8px;
       margin-top: 0.3rem;
-      border-radius: 4px;
       border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .nota {
+      text-align: center;
+      color: #555;
+      font-size: 0.9rem;
+      margin-top: 1rem;
     }
     button {
       margin-top: 2rem;
-      padding: 10px 20px;
+      padding: 12px;
       background-color: #39b7b0;
       color: white;
       border: none;
       border-radius: 6px;
       font-size: 16px;
       cursor: pointer;
-      display: block;
       width: 100%;
     }
     button:hover {
@@ -63,62 +71,64 @@
 </head>
 <body>
   <div class="container">
-    <h2>Resumen de tu Pedido</h2>
+    <h1>Resumen de tu Pedido</h1>
     <ul id="lista-pedido"></ul>
 
     <form id="formulario-pedido">
-      <label for="nombre">Nombre completo:</label>
-      <input type="text" id="nombre" name="nombre" required />
+      <h2>📋 Tus datos</h2>
 
-      <label for="correo">Correo electrónico:</label>
-      <input type="email" id="correo" name="correo" required />
+      <label for="nombre">Nombre completo *</label>
+      <input type="text" id="nombre" name="nombre" required>
 
-      <label for="estado">Estado:</label>
-      <input type="text" id="estado" name="estado" required />
+      <label for="correo">Correo electrónico *</label>
+      <input type="email" id="correo" name="correo" required>
 
-      <label for="municipio">Municipio:</label>
-      <input type="text" id="municipio" name="municipio" required />
+      <label for="estado">Estado *</label>
+      <input type="text" id="estado" name="estado" required>
 
-      <label for="colonia">Colonia:</label>
-      <input type="text" id="colonia" name="colonia" required />
+      <label for="municipio">Municipio *</label>
+      <input type="text" id="municipio" name="municipio" required>
 
-      <label for="direccion">Dirección (calle y número):</label>
-      <input type="text" id="direccion" name="direccion" required />
+      <label for="colonia">Colonia *</label>
+      <input type="text" id="colonia" name="colonia" required>
 
+      <label for="direccion">Dirección completa *</label>
+      <input type="text" id="direccion" name="direccion" required>
+
+      <p class="nota">
+        Al hacer clic en “Confirmar pedido” se abrirá tu cliente de correo para enviar los datos a SorprendARTE.
+      </p>
       <button type="submit">Confirmar pedido</button>
     </form>
   </div>
 
   <script>
-    // Leer los datos del pedido desde la URL (GET)
+    // Genera el resumen del pedido leyendo parámetros GET
     const params = new URLSearchParams(window.location.search);
-    const lista = document.getElementById('lista-pedido');
     const nombres = {
-      uva: 'Jabón con aroma a uva',
-      durazno: 'Jabón con aroma a durazno',
-      mandarina: 'Jabón con aroma a mandarina',
-      sandia: 'Jabón con aroma a sandía',
-      neutro: 'Jabón 0% aroma y color',
-      carbon: 'Jabón de carbón activado'
+      uva: 'Jabón con aroma a Uva',
+      durazno: 'Jabón con aroma a Durazno',
+      mandarina: 'Jabón con aroma a Mandarina',
+      sandia: 'Jabón con aroma a Sandía',
+      neutro: 'Jabón 0% Aroma y Color',
+      carbon: 'Jabón de Carbón Activado'
     };
+    const lista = document.getElementById('lista-pedido');
+    window.pedidoItems = [];
 
-    const pedidoLines = [];
-
-    for (const [clave, valor] of params.entries()) {
-      if (nombres[clave] && parseInt(valor) > 0) {
-        const texto = `${valor} x ${nombres[clave]}`;
+    for (const [clave, nombre] of Object.entries(nombres)) {
+      const cantidad = parseInt(params.get(clave));
+      if (!isNaN(cantidad) && cantidad > 0) {
+        const texto = `${cantidad} x ${nombre}`;
         const li = document.createElement('li');
         li.textContent = texto;
         li.classList.add('pedido-item');
         lista.appendChild(li);
-        pedidoLines.push(texto);
+        window.pedidoItems.push(texto);
       }
     }
-
-    // Guardar los productos como elementos para usar en email
-    window.pedidoLines = pedidoLines;
   </script>
-  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
   <script src="script.js"></script>
 </body>
 </html>

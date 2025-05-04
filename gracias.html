@@ -8,23 +8,39 @@
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #f0f8ff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
+      padding: 2rem;
+      margin: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     h1 {
+      text-align: center;
       color: #39b7b0;
     }
     p {
-      font-size: 1.2rem;
-      margin-top: 1rem;
+      margin: 1rem 0;
+      line-height: 1.4;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+    li {
+      background: #eef;
+      margin: 0.3rem 0;
+      padding: 0.5rem;
+      border-radius: 6px;
     }
     a {
-      margin-top: 2rem;
       display: inline-block;
+      margin-top: 1.5rem;
       padding: 10px 20px;
       background-color: #39b7b0;
       color: white;
@@ -38,18 +54,48 @@
   </style>
 </head>
 <body>
-  <h1>¡Gracias por tu pedido, <span id="nombre-cliente">cliente</span>!</h1>
-  <p>Tu pedido ha sido enviado. ¡Muchas gracias por elegirnos!</p>
-  <a id="infoLink" href="#">Información sobre el pedido</a>
+  <div class="container">
+    <h1>¡Gracias por tu pedido, <span id="nombreCliente">Cliente</span>!</h1>
+
+    <p>Este es el resumen de tu compra:</p>
+    <ul id="listaProductos"></ul>
+
+    <p>
+      Hemos abierto tu cliente de correo para enviar la información completa a SorprendARTE.
+      <br>
+      Puedes revisar los detalles en tu bandeja de entrada (<strong><span id="correoCliente"></span></strong>).
+    </p>
+
+    <a href="index.html">Volver a la tienda</a>
+  </div>
 
   <script>
     const params = new URLSearchParams(window.location.search);
-    const nombre = params.get('nombre') || 'cliente';
-    document.getElementById('nombre-cliente').textContent = nombre;
+    const nombre = params.get('nombre') || 'Cliente';
+    const correo = params.get('correo') || '';
 
-    // Redireccionar a resumen de pedido (opcional, puedes cambiar la URL)
-    const link = document.getElementById('infoLink');
-    link.href = `resumen.html?nombre=${encodeURIComponent(nombre)}`;
+    document.getElementById('nombreCliente').textContent = nombre;
+    document.getElementById('correoCliente').textContent = correo;
+
+    // Productos pasados por URL
+    const productos = {
+      uva: 'Jabón con aroma a Uva',
+      durazno: 'Jabón con aroma a Durazno',
+      mandarina: 'Jabón con aroma a Mandarina',
+      sandia: 'Jabón con aroma a Sandía',
+      neutro: 'Jabón 0% Aroma y Color',
+      carbon: 'Jabón de Carbón Activado'
+    };
+    const lista = document.getElementById('listaProductos');
+
+    for (const [clave, nombreProd] of Object.entries(productos)) {
+      const qty = parseInt(params.get(clave));
+      if (!isNaN(qty) && qty > 0) {
+        const li = document.createElement('li');
+        li.textContent = `${qty} x ${nombreProd}`;
+        lista.appendChild(li);
+      }
+    }
   </script>
 </body>
 </html>

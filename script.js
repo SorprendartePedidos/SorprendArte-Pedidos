@@ -4,10 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', e => {
     e.preventDefault();
 
-    // Aviso al cliente
     alert('Se abrirá tu cliente de correo para enviar el pedido a SorprendARTE.');
 
-    // Recoger datos del cliente
+    // Datos del cliente
     const nombre    = form.nombre.value.trim();
     const correo    = form.correo.value.trim();
     const estado    = form.estado.value.trim();
@@ -21,30 +20,34 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Recoger los items del pedido
+    // Productos (se guardaron antes en window.pedidoItems y están en URL)
+    const params = new URLSearchParams(window.location.search);
     const items = window.pedidoItems || [];
-    if (items.length === 0) {
-      alert('No hay productos seleccionados.');
-      return;
-    }
 
-    // Construir asunto y cuerpo para mailto:
+    // Construir mailto
     const subject = encodeURIComponent(`Nuevo pedido de ${nombre}`);
-    let body = `Cliente: ${nombre}\nCorreo: ${correo}\n\n` +
-               `Dirección de entrega:\n` +
-               `Estado: ${estado}\n` +
-               `Municipio: ${municipio}\n` +
-               `Colonia: ${colonia}\n` +
-               `Dirección: ${direccion}\n\n` +
-               `Pedido:\n` +
-               items.map(i => `- ${i}`).join('\n');
+    let body = 
+      `Cliente: ${nombre}\nCorreo: ${correo}\n\n` +
+      `Dirección de entrega:\nEstado: ${estado}\nMunicipio: ${municipio}\nColonia: ${colonia}\nDirección: ${direccion}\n\n` +
+      `Pedido:\n` +
+      items.map(i => `- ${i}`).join('\n');
 
     // Abrir cliente de correo
-    window.location.href = `mailto:sorprendarte01@gmail.com?subject=${subject}&body=${encodeURIComponent(body)}`;
+    window.location.href = 
+      `mailto:sorprendarte01@gmail.com?subject=${subject}&body=${encodeURIComponent(body)}`;
 
-    // Redirigir al cliente a gracias.html con su nombre
+    // Redirigir a gracias.html, pasando nombre, correo y los productos
     setTimeout(() => {
-      window.location.href = `gracias.html?nombre=${encodeURIComponent(nombre)}`;
+      // conservamos los parámetros de producto
+      const prodQuery = window.location.search.startsWith('?')
+        ? window.location.search.substring(1)
+        : window.location.search;
+      const query = new URLSearchParams({
+        nombre,
+        correo
+      });
+      if (prodQuery) query.append(prodQuery);
+      window.location.href = `gracias.html?${query.toString()}`;
     }, 500);
   });
 });

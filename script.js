@@ -20,11 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Productos (se guardaron antes en window.pedidoItems y están en URL)
-    const params = new URLSearchParams(window.location.search);
+    // Recogemos los productos
     const items = window.pedidoItems || [];
+    if (items.length === 0) {
+      alert('No hay productos seleccionados.');
+      return;
+    }
 
-    // Construir mailto
+    // Construimos asunto y cuerpo para mailto
     const subject = encodeURIComponent(`Nuevo pedido de ${nombre}`);
     let body = 
       `Cliente: ${nombre}\nCorreo: ${correo}\n\n` +
@@ -32,22 +35,15 @@ document.addEventListener('DOMContentLoaded', () => {
       `Pedido:\n` +
       items.map(i => `- ${i}`).join('\n');
 
-    // Abrir cliente de correo
-    window.location.href = 
-      `mailto:sorprendarte01@gmail.com?subject=${subject}&body=${encodeURIComponent(body)}`;
+    // En vez de cambiar location.href abrimos en nueva ventana
+    window.open(
+      `mailto:sorprendarte01@gmail.com?subject=${subject}&body=${encodeURIComponent(body)}`,
+      '_blank'
+    );
 
-    // Redirigir a gracias.html, pasando nombre, correo y los productos
+    // Ahora sí redirigimos a gracias.html
     setTimeout(() => {
-      // conservamos los parámetros de producto
-      const prodQuery = window.location.search.startsWith('?')
-        ? window.location.search.substring(1)
-        : window.location.search;
-      const query = new URLSearchParams({
-        nombre,
-        correo
-      });
-      if (prodQuery) query.append(prodQuery);
-      window.location.href = `gracias.html?${query.toString()}`;
+      window.location.href = `gracias.html?nombre=${encodeURIComponent(nombre)}`;
     }, 500);
   });
 });
